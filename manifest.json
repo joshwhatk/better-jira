@@ -1,0 +1,20 @@
+{
+   "browser_action": {
+      "default_icon": "logo.png",
+      "default_popup": "popup.html"
+   },
+   "content_scripts": [ {
+      "css": [ "content.css" ],
+      "js": [ "better-jira.js" ],
+      "matches": [ "https://*.atlassian.net/*" ]
+   } ],
+   "description": "Much needed interface improvements for Jira",
+   "manifest_version": 2,
+   "name": "Better Jira",
+   "permissions": [
+      "https://*.atlassian.net/*",
+      "storage"
+   ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "0.0.36"
+}

@@ -1,0 +1,26 @@
+:root {
+  --viewport-width: 2000px;
+}
+
+/* horizontal scroll on kanban boards */
+#ghx-pool-column {
+  overflow-y: hidden;
+}
+#ghx-pool {
+  width: var(--viewport-width);
+}
+
+/* horizontal scroll on board settings -> columns option */
+.ghx-page-panel-content-item {
+  overflow-y: hidden;
+}
+#ghx-mapping {
+  width: var(--viewport-width) !important;
+}
+
+/* story detail view coulmn */
+#ghx-detail-view {
+  width: 600px !important;
+  position: relative;
+  z-index: 3;
+}
