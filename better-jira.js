@@ -16,8 +16,12 @@
       setTimeout(this._resizeColumns.bind(this), 700);
     }
 
-    updateColumnWidths(data) {
-      this._getPreferredWidth(data);
+    updateColumnWidths(detail) {
+      if(!detail.enabled) {
+        document.documentElement.style.setProperty('--viewport-width', 'inherit');
+        return;
+      }
+      this._getPreferredWidth(detail)
     }
 
     _resizeColumns() {
@@ -41,17 +45,18 @@
       console.log('this is', this);
       this.data.columnWidth = storage.columnWidth;
 
-      if(isNaN(data.columnWidth)) {
-        data.columnWidth = 200;
+      if(isNaN(this.data.columnWidth)) {
+        this.data.columnWidth = 200;
       }
 
       this._setPreferredWidth();
     }
 
-    _setPreferredWidth(fromPopup = false) {
+
+    _setPreferredWidth() {
       let preferredWidth, columnCount, padding, width;
 
-      preferredWidth = fromPopup === false ? data.columnWidth : fromPopup;
+      preferredWidth = this.data.columnWidth;
 
       columnCount = document.querySelector('.ghx-swimlane > .ghx-columns')
         .querySelectorAll('.ghx-column.ghx-narrow-card')
@@ -67,7 +72,7 @@
   let app = new BetterJira();
   window.addEventListener('load', app.initiate.bind(app));
 
-  if(typeof newColumnWidth !== 'undefined') {
-    setPreferredWidth(newColumnWidth);
-  }
+  document.addEventListener('better-jira:updated', (event) => {
+    app.updateColumnWidths(event.detail);
+  });
 })();

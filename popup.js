@@ -9,6 +9,7 @@
       this.defaults = {
         columnWidth: 200,
         enabled: true,
+        updatedEvent: 'better-jira:updated',
       };
 
       this.setDefaults();
@@ -54,14 +55,29 @@
     }
 
     save() {
-      this.Storage.set({columnWidth: this.data.columnWidth}, function() {
-        chrome.tabs.executeScript({
-          code: 'var newColumnWidth = ' + app.data.columnWidth + ';'
-        }, function() {
-          chrome.tabs.executeScript({file: 'better-jira.js'});
-        });
+      this.Storage.set({enabled: this.data.enabled}, () => {
+        this.Storage.set({columnWidth: this.data.columnWidth}, this.refresh.bind(this));
       });
-      this.Storage.set({enabled: this.data.enabled});
+    }
+
+    refresh() {
+      let code = [
+        `(function()`,
+        `{`,
+          `'use strict';`,
+
+          `let updateEvent = new CustomEvent('${this.defaults.updatedEvent}', {`,
+            `detail: {`,
+              `columnWidth: ${this.data.columnWidth},`,
+              `enabled: ${this.data.enabled}`,
+            `}`,
+          `});`,
+          `document.dispatchEvent(updateEvent);`,
+        `})();`,
+      ];
+      chrome.tabs.executeScript({
+        code: code.join('')
+      });
     }
   }
 
