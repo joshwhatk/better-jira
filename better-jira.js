@@ -41,6 +41,10 @@
       console.log('this is', this);
       this.data.columnWidth = storage.columnWidth;
 
+      if(isNaN(data.columnWidth)) {
+        data.columnWidth = 200;
+      }
+
       this._setPreferredWidth();
     }
 
