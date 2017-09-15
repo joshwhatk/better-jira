@@ -21,6 +21,10 @@
   function getPreferredWidth(storage) {
     data.columnWidth = storage.columnWidth;
 
+    if(isNaN(data.columnWidth)) {
+      data.columnWidth = 200;
+    }
+
     setPreferredWidth();
   }
 
