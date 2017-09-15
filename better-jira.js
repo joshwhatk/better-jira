@@ -41,17 +41,13 @@
       console.log('this is', this);
       this.data.columnWidth = storage.columnWidth;
 
-      if(isNaN(this.data.columnWidth)) {
-        this.data.columnWidth = 200;
-      }
-
       this._setPreferredWidth();
     }
 
-    _setPreferredWidth() {
+    _setPreferredWidth(fromPopup = false) {
       let preferredWidth, columnCount, padding, width;
 
-      preferredWidth = this.data.columnWidth;
+      preferredWidth = fromPopup === false ? data.columnWidth : fromPopup;
 
       columnCount = document.querySelector('.ghx-swimlane > .ghx-columns')
         .querySelectorAll('.ghx-column.ghx-narrow-card')
@@ -66,4 +62,8 @@
 
   let app = new BetterJira();
   window.addEventListener('load', app.initiate.bind(app));
+
+  if(typeof newColumnWidth !== 'undefined') {
+    setPreferredWidth(newColumnWidth);
+  }
 })();

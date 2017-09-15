@@ -54,7 +54,13 @@
     }
 
     save() {
-      this.Storage.set({columnWidth: this.data.columnWidth});
+      this.Storage.set({columnWidth: this.data.columnWidth}, function() {
+        chrome.tabs.executeScript({
+          code: 'var newColumnWidth = ' + app.data.columnWidth + ';'
+        }, function() {
+          chrome.tabs.executeScript({file: 'better-jira.js'});
+        });
+      });
       this.Storage.set({enabled: this.data.enabled});
     }
   }
