@@ -7,18 +7,27 @@
 <html>
   <head>
     <title>Better JIRA</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Raleway" rel="stylesheet">
     <style>
       body {
-        font-family: "Segoe UI", "Lucida Grande", Tahoma, sans-serif;
+        font-family: "Raleway", Helvetica, sans-serif;
         font-size: 100%;
         width: 450px;
       }
-      #status {
-        /* avoid an excessively wide status text */
-        white-space: pre;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 400px;
+      h1 {
+        font-family: "Montserrat", Helvetica, sans-serif;
+      }
+      form {
+        height: 100%;
+        width: 100%;
+      }
+      form p {
+        color: #808080;
+        font-size: 0.9rem;
+      }
+
+      .row {
+        margin-bottom: 0.5rem;
       }
     </style>
     <script src="popup.js"></script>
@@ -26,11 +35,12 @@
   <body>
     <h1>Better JIRA</h1>
     <form id="better-jira">
-      <label>Column Width</label>
-      <input type="text" name="columnWidth" id="columnWidth">
+      <p>Set your default Kanban Column Width.</p>
+      <div class="row">
+        <label for="columnWidth">Column width</label>
+        <input type="text" name="columnWidth" id="columnWidth">
+      </div>
       <input type="submit" name="Save">
     </form>
-    <div id="status"></div>
-    <img id="image-result" hidden>
   </body>
 </html>
