@@ -2,49 +2,54 @@
 {
   'use strict';
 
+  class Popup {
+    constructor() {
+      this.Storage = chrome.storage.sync;
+      this.data = {};
+      this.defaults = {
+        columnWidth: 200,
+      };
+
+      this.setDefaults();
+      this.handleFormSubmissions();
+    }
+
+    setDefaults() {
+      this.Storage.get('columnWidth', (storage) => {
+        let value = storage.columnWidth;
+        console.log('columnWidth from Storage', value);
+        if(!value) {
+          value = this.defaults.columnWidth;
+          this.Storage.set({columnWidth: value});
+        }
+        this.data.columnWidth = value;
+
+        this.addValuesToInputs();
+      });
+    }
+
+    addValuesToInputs() {
+      document.getElementById('columnWidth').value = this.data.columnWidth;
+    }
+
+    handleFormSubmissions() {
+      document.getElementById('better-jira').addEventListener('submit', (event) => {
+        event.preventDefault();
+        console.log('form submission information', arguments);
+        this.data.columnWidth = document.getElementById('columnWidth').value;
+        this.save();
+      });
+    }
+
+    save() {
+      this.Storage.set({columnWidth: this.data.columnWidth});
+    }
+  }
+
   window.addEventListener('load', function initiate() {
     window.removeEventListener('load', initiate);
 
-    let Storage = chrome.storage.sync;
-    let app = {
-      data: {},
-      defaults: {
-        columnWidth: 200,
-      },
-      main: function() {
-        app.setDefaults();
-        app.handleFormSubmissions();
-      },
-      setDefaults: function() {
-        Storage.get('columnWidth', (storage) => {
-          let value = storage.columnWidth;
-          console.log('columnWidth from Storage', value);
-          if(!value) {
-            value = app.defaults.columnWidth;
-            Storage.set({columnWidth: value});
-          }
-          app.data.columnWidth = value;
-
-          app.addValuesToInputs();
-        });
-      },
-      addValuesToInputs: function() {
-        document.getElementById('columnWidth').value = app.data.columnWidth;
-      },
-      handleFormSubmissions: function() {
-        document.getElementById('better-jira').addEventListener('submit', function(event) {
-          event.preventDefault();
-          console.log('form submission information', arguments);
-          app.data.columnWidth = document.getElementById('columnWidth').value;
-          app.save();
-        });
-      },
-      save: function() {
-        Storage.set({columnWidth: app.data.columnWidth});
-      }
-    };
-
-    app.main();
+    new Popup();
 
     console.log('You are here!');
   })
