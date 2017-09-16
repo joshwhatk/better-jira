@@ -8,6 +8,7 @@
       this.data = {};
       this.defaults = {
         columnWidth: 200,
+        enabled: true,
       };
 
       this.setDefaults();
@@ -16,6 +17,7 @@
 
     setDefaults() {
       this.Storage.get('columnWidth', (storage) => {
+        console.log('storage', storage);
         let value = storage.columnWidth;
         console.log('columnWidth from Storage', value);
         if(!value) {
@@ -24,12 +26,21 @@
         }
         this.data.columnWidth = value;
 
-        this.addValuesToInputs();
+        document.getElementById('columnWidth').value = this.data.columnWidth;
       });
-    }
 
-    addValuesToInputs() {
-      document.getElementById('columnWidth').value = this.data.columnWidth;
+      this.Storage.get('enabled', (storage) => {
+        let value = storage.enabled;
+        if(value === undefined) {
+          value = this.defaults.enabled;
+          this.Storage.set({enabled: value});
+        }
+
+        this.data.enabled = value;
+        console.log('enabled storage', storage);
+
+        document.getElementById('enabled').checked = !! value;
+      });
     }
 
     handleFormSubmissions() {
@@ -37,12 +48,14 @@
         event.preventDefault();
         console.log('form submission information', arguments);
         this.data.columnWidth = document.getElementById('columnWidth').value;
+        this.data.enabled = document.getElementById('enabled').checked;
         this.save();
       });
     }
 
     save() {
       this.Storage.set({columnWidth: this.data.columnWidth});
+      this.Storage.set({enabled: this.data.enabled});
     }
   }
 

@@ -26,7 +26,15 @@
         return;
       }
 
-      this.Storage.get('columnWidth', this._getPreferredWidth.bind(this));
+      //-- Disallow setting columns if the plugin is not enabled
+      this.Storage.get('enabled', (storage) => {
+        if(!storage.enabled) {
+          document.documentElement.style.setProperty('--viewport-width', 'inherit');
+          return;
+        }
+
+        this.Storage.get('columnWidth', this._getPreferredWidth.bind(this));
+      });
     }
 
     _getPreferredWidth(storage) {
