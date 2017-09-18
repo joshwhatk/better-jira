@@ -16,8 +16,12 @@
       setTimeout(this._resizeColumns.bind(this), 700);
     }
 
-    updateColumnWidths(data) {
-      this._getPreferredWidth(data);
+    updateColumnWidths(detail) {
+      if(!detail.enabled) {
+        document.documentElement.style.setProperty('--viewport-width', 'inherit');
+        return;
+      }
+      this._getPreferredWidth(detail)
     }
 
     _resizeColumns() {
@@ -48,6 +52,7 @@
       this._setPreferredWidth();
     }
 
+
     _setPreferredWidth() {
       let preferredWidth, columnCount, padding, width;
 
@@ -66,4 +71,8 @@
 
   let app = new BetterJira();
   window.addEventListener('load', app.initiate.bind(app));
+
+  document.addEventListener('better-jira:updated', (event) => {
+    app.updateColumnWidths(event.detail);
+  });
 })();
