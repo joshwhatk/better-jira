@@ -2,7 +2,7 @@
 
 Ever wished that large Kanban boards could not be squished? Now you can set your own custom Column width for all of your cards on all of your boards.
 
-To install visit this link: [Chrome Web Store](https://chrome.google.com/webstore/detail/better-jira/adjlkmhgnjccbagimdppnminndehkmgl).
+To install, visit this link: [Chrome Web Store](https://chrome.google.com/webstore/detail/better-jira/adjlkmhgnjccbagimdppnminndehkmgl).
 
 ## Planned features:
 - [ ] Set custom width for detail view
