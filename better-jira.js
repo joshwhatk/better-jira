@@ -10,7 +10,6 @@
     }
 
     initiate() {
-      console.log('this is', this);
       window.removeEventListener('load', this.initiate);
 
       setTimeout(this._resizeColumns.bind(this), 700);
@@ -25,7 +24,6 @@
     }
 
     _resizeColumns() {
-      console.log('this is', this);
       if(document.querySelector('.ghx-swimlane') === null) {
         return;
       }
@@ -42,7 +40,6 @@
     }
 
     _getPreferredWidth(storage) {
-      console.log('this is', this);
       this.data.columnWidth = storage.columnWidth;
 
       if(isNaN(this.data.columnWidth)) {
@@ -59,11 +56,15 @@
       preferredWidth = this.data.columnWidth;
 
       columnCount = document.querySelector('.ghx-swimlane > .ghx-columns')
-        .querySelectorAll('.ghx-column.ghx-narrow-card')
+        .querySelectorAll('.ghx-column')
         .length;
 
       padding = columnCount * 12;
       width = (columnCount * preferredWidth) + padding;
+
+      if(width < 10) {
+        return;
+      }
 
       document.documentElement.style.setProperty('--viewport-width', `${width}px`);
     }
