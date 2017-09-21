@@ -16,6 +16,5 @@
       "https://*.atlassian.net/*",
       "storage"
    ],
-   "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "0.0.42"
+   "version": "0.0.43"
 }
