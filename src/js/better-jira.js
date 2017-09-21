@@ -28,9 +28,75 @@
       let cssClass = 'standup';
       if(state) {
         document.getElementsByTagName('body')[0].classList.add(cssClass);
+        window.addEventListener('keydown', this.doStandup.bind(this));
+        this.initializeStandup();
       } else {
         document.getElementsByTagName('body')[0].classList.remove(cssClass);
+        window.removeEventListener('keydown', this.doStandup.bind(this));
+        this.cleanupStandup();
       }
+
+    }
+
+    initializeStandup() {
+      this.data.swimlanes = [];
+      Array.from(document.querySelectorAll('.ghx-swimlane')).forEach((el) => {
+        let columns = el.querySelectorAll('.ghx-columns > .ghx-column');
+
+        this.data.columnCount = columns.length;
+        this.data.pointer = this.data.columnCount - 1;
+        columns[this.data.pointer].classList.add('ghx-label-5');
+        columns[this.data.pointer].classList.add('large-column');
+        this.data.swimlanes.push(columns);
+      });
+    }
+
+    cleanupStandup() {
+      if(this.data.pointer === undefined || this.data.swimlanes === undefined) {
+        return;
+      }
+
+      this._clearColumnBackground();
+    }
+
+    doStandup(event) {
+      console.log(event);
+      console.log(this.data.pointer, this.data.swimlanes);
+      //-- Advance down the board
+      if(event.key === '<') {
+        if((this.data.pointer - 1) < 0) {
+          return;
+        }
+
+        this._clearColumnBackground();
+        this.data.pointer = this.data.pointer - 1;
+        this._setColumnBackground();
+      }
+
+      //-- Advance up the board
+      if(event.key === '>') {
+        if((this.data.pointer + 1) === this.data.columnCount) {
+          return;
+        }
+
+        this._clearColumnBackground();
+        this.data.pointer = this.data.pointer + 1;
+        this._setColumnBackground();
+      }
+    }
+
+    _clearColumnBackground() {
+      this.data.swimlanes.forEach((columns) => {
+        columns[this.data.pointer].classList.remove('ghx-label-5');
+        columns[this.data.pointer].classList.remove('large-column');
+      });
+    }
+
+    _setColumnBackground() {
+      this.data.swimlanes.forEach((columns) => {
+        columns[this.data.pointer].classList.add('ghx-label-5');
+        columns[this.data.pointer].classList.add('large-column');
+      });
     }
 
     _resizeColumns() {
