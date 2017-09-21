@@ -11,7 +11,7 @@ body.standup #ghx-rabid {
 }
 
 body.standup #ghx-work {
-  height: 100% !important;
+  height: 100vh !important;
 }
 
 /*# sourceMappingURL=standup.css.map */
