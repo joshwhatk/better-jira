@@ -11,6 +11,7 @@
 
     initiate() {
       window.removeEventListener('load', this.initiate);
+      console.log('Page loaded, running Better JIRA now.');
 
       setTimeout(this._resizeColumns.bind(this), 700);
     }
