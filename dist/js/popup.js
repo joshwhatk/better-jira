@@ -9,6 +9,7 @@
       this.defaults = {
         columnWidth: 200,
         enabled: true,
+        standup: false,
         updatedEvent: 'better-jira:updated',
       };
 
@@ -42,9 +43,30 @@
 
         document.getElementById('enabled').checked = !! value;
       });
+
+      this.Storage.get('standup', (storage) => {
+        let value = storage.standup;
+        if(value === undefined) {
+          value = this.defaults.standup;
+          this.Storage.set({standup: value});
+        }
+
+        this.data.standup = value;
+        console.log('standup storage', storage);
+
+        document.getElementById('standup').checked = !! value;
+      });
     }
 
     handleFormSubmissions() {
+      let standup = document.getElementById('standup')
+      standup.addEventListener('click', (event) => {
+        console.log('you clicked it!', standup.checked, event);
+        this.data.standup = standup.checked;
+        console.log('css', this.defaults.standupCss);
+        this.save();
+      });
+
       document.getElementById('better-jira').addEventListener('submit', (event) => {
         event.preventDefault();
         console.log('form submission information', arguments);
@@ -56,7 +78,9 @@
 
     save() {
       this.Storage.set({enabled: this.data.enabled}, () => {
-        this.Storage.set({columnWidth: this.data.columnWidth}, this.refresh.bind(this));
+        this.Storage.set({columnWidth: this.data.columnWidth}, () => {
+          this.Storage.set({standup: this.data.standup}, this.refresh.bind(this));
+        });
       });
     }
 
@@ -69,12 +93,14 @@
           `let updateEvent = new CustomEvent('${this.defaults.updatedEvent}', {`,
             `detail: {`,
               `columnWidth: ${this.data.columnWidth},`,
-              `enabled: ${this.data.enabled}`,
+              `enabled: ${this.data.enabled},`,
+              `standup: ${this.data.standup},`,
             `}`,
           `});`,
           `document.dispatchEvent(updateEvent);`,
         `})();`,
       ];
+
       chrome.tabs.executeScript({
         code: code.join('')
       });
@@ -89,3 +115,5 @@
     console.log('You are here!');
   })
 })();
+
+//# sourceMappingURL=popup.js.map

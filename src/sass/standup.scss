@@ -1,0 +1,16 @@
+body.standup {
+  #ghx-header, #ghx-operations, #header, .aui-sidebar {
+    display: none;
+  }
+
+  #gh {
+    padding-left: 0;
+  }
+
+  #ghx-rabid {
+    height: 100vh;
+  }
+  #ghx-work {
+    height: 100% !important;
+  }
+}

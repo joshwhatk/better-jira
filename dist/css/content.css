@@ -6,6 +6,7 @@
 #ghx-pool-column {
   overflow-y: hidden;
 }
+
 #ghx-pool {
   width: var(--viewport-width);
 }
@@ -14,6 +15,7 @@
 .ghx-page-panel-content-item {
   overflow-y: hidden;
 }
+
 #ghx-mapping {
   width: var(--viewport-width) !important;
 }
@@ -24,3 +26,10 @@
   position: relative;
   z-index: 3;
 }
+
+/* Prevent column headers from overlapping when scrolling vertically */
+.aui-sidebar {
+  z-index: 2;
+}
+
+/*# sourceMappingURL=content.css.map */

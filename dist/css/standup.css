@@ -1,0 +1,17 @@
+body.standup #ghx-header, body.standup #ghx-operations, body.standup #header, body.standup .aui-sidebar {
+  display: none;
+}
+
+body.standup #gh {
+  padding-left: 0;
+}
+
+body.standup #ghx-rabid {
+  height: 100vh;
+}
+
+body.standup #ghx-work {
+  height: 100% !important;
+}
+
+/*# sourceMappingURL=standup.css.map */

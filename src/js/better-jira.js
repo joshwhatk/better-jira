@@ -23,6 +23,15 @@
       this._getPreferredWidth(detail)
     }
 
+    handleStandup(state) {
+      let cssClass = 'standup';
+      if(state) {
+        document.getElementsByTagName('body')[0].classList.add(cssClass);
+      } else {
+        document.getElementsByTagName('body')[0].classList.remove(cssClass);
+      }
+    }
+
     _resizeColumns() {
       if(document.querySelector('.ghx-swimlane') === null) {
         return;
@@ -36,6 +45,10 @@
         }
 
         this.Storage.get('columnWidth', this._getPreferredWidth.bind(this));
+      });
+
+      this.Storage.get('standup', (storage) => {
+        this.handleStandup(storage.standup);
       });
     }
 
@@ -74,6 +87,9 @@
   window.addEventListener('load', app.initiate.bind(app));
 
   document.addEventListener('better-jira:updated', (event) => {
+    console.log('woohoo!', event.detail);
     app.updateColumnWidths(event.detail);
+
+    app.handleStandup(event.detail.standup);
   });
 })();
