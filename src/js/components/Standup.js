@@ -51,8 +51,6 @@ class Standup {
   }
 
   doStandup(event) {
-    console.log(event);
-    console.log(this.data.pointer, this.data.swimlanes);
     //-- Advance down the board
     if(event.key === 'ArrowLeft' && event.shiftKey) {
       event.preventDefault();

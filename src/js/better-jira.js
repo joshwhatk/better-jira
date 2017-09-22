@@ -87,7 +87,6 @@ class BetterJira
   }
 
   _setPoolWidth(width) {
-    console.log('width', width);
     document.documentElement.style.setProperty('--viewport-width', `${width}px`);
   }
 }
