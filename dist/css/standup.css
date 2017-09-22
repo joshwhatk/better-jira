@@ -14,13 +14,8 @@ body.standup #ghx-work {
   height: 100vh !important;
 }
 
-body.standup #ghx-column-header-group .large-column {
-  background-color: white;
-}
-
 body.standup .large-column {
   width: 400px !important;
-  background-color: #3b7fc4;
 }
 
 body.standup .instructions {

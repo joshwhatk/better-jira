@@ -6,8 +6,7 @@
    "content_scripts": [ {
       "css": [ "dist/css/content.css", "dist/css/standup.css" ],
       "js": [ "dist/js/better-jira.js" ],
-      "matches": [ "https://*.atlassian.net/*" ],
-      "run_at": "document_start"
+      "matches": [ "https://*.atlassian.net/*" ]
    } ],
    "description": "Much needed interface improvements for Jira",
    "manifest_version": 2,
@@ -17,5 +16,5 @@
       "storage"
    ],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "0.0.44"
+   "version": "0.0.45"
 }

@@ -7,6 +7,17 @@ class BetterJira
     this.Storage = chrome.storage.sync;
   }
 
+  preemptiveStrike() {
+    document.body.classList.add('better-jira');
+    this.Storage.get('poolWidth', (storage) => {
+      if(storage.poolWidth < 10 || isNaN(storage.poolWidth)) {
+        return;
+      }
+      console.log('Preemptively setting width now');
+      this._setPoolWidth(storage.poolWidth);
+    });
+  }
+
   initiate() {
     window.removeEventListener('load', this.initiate, false);
     console.log('Page loaded, running Better JIRA now.');
@@ -70,13 +81,20 @@ class BetterJira
     if(width < 10) {
       return;
     }
+    this.Storage.set({poolWidth: width});
 
+    this._setPoolWidth(width);
+  }
+
+  _setPoolWidth(width) {
+    console.log('width', width);
     document.documentElement.style.setProperty('--viewport-width', `${width}px`);
   }
 }
 
 let app = new BetterJira();
 window.addEventListener('load', app.initiate.bind(app), false);
+app.preemptiveStrike();
 
 document.addEventListener('better-jira:updated', (event) => {
   console.log('woohoo!', event.detail);
