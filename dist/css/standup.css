@@ -14,8 +14,39 @@ body.standup #ghx-work {
   height: 100vh !important;
 }
 
-body.standup .large-column {
-  width: 400px !important;
+body.standup #ghx-column-header-group .large-column {
+  background-color: white;
 }
 
-/*# sourceMappingURL=standup.css.map */
+body.standup .large-column {
+  width: 400px !important;
+  background-color: #3b7fc4;
+}
+
+body.standup .instructions {
+  position: fixed;
+  bottom: 0.2rem;
+  right: 1rem;
+  z-index: 2;
+  border-radius: 3px;
+  border: 1px solid #ccc;
+  background-color: #f7f7f7;
+  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset;
+          box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset;
+  color: #333;
+  text-shadow: 0 1px 0 #fff;
+  padding: 0.5rem 1rem;
+  opacity: 0;
+  -webkit-transition: opacity 0.6s ease-in-out;
+  transition: opacity 0.6s ease-in-out;
+}
+
+body.standup .instructions:hover {
+  opacity: 1;
+}
+
+body.standup .instructions ul {
+  list-style: none;
+  padding-left: 0;
+  pointer-events: none;
+}

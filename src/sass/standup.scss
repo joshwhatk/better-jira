@@ -1,3 +1,4 @@
+$nice-blue: #3b7fc4;
 body.standup {
   #ghx-header, #ghx-operations, #header, .aui-sidebar {
     display: none;
@@ -14,7 +15,38 @@ body.standup {
     height: 100vh !important;
   }
 
+  #ghx-column-header-group .large-column {
+    background-color: white;
+  }
+
   .large-column {
     width: 400px !important;
+    background-color: $nice-blue;
+  }
+
+  .instructions {
+    position: fixed;
+    bottom: 0.2rem;
+    right: 1rem;
+    z-index: 2;
+    border-radius: 3px;
+    border: 1px solid #ccc;
+    background-color: #f7f7f7;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 0 0 2px #fff inset;
+    color: #333;
+    text-shadow: 0 1px 0 #fff;
+    padding: 0.5rem 1rem;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+
+    &:hover {
+      opacity: 1;
+    }
+
+    ul {
+      list-style: none;
+      padding-left: 0;
+      pointer-events: none;
+    }
   }
 }
