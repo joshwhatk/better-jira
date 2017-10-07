@@ -50,4 +50,22 @@ body.standup {
       pointer-events: none;
     }
   }
+
+  /*
+  |--------------------------------------------------------------------------
+  | New JIRA Experience
+  |--------------------------------------------------------------------------
+  */
+
+  &.adg3 {
+    #navigation-app {
+      display: none;
+    }
+
+    #content {
+      margin-left: 1rem;
+      margin-right: 0;
+    }
+  }
+
 }
