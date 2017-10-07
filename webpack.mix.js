@@ -31,6 +31,7 @@ mix.options({
 mix
   .sass('src/sass/content.scss', 'dist/css')
   .sass('src/sass/standup.scss', 'dist/css')
+  .sass('src/sass/popup.scss', 'dist/css')
   .js('src/js/better-jira.js', 'dist/js')
   .js('src/js/popup.js', 'dist/js');
 

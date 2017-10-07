@@ -14,7 +14,7 @@
       };
 
       this.setDefaults();
-      this.handleFormSubmissions();
+      this.handleFormEvents();
     }
 
     setDefaults() {
@@ -58,12 +58,25 @@
       });
     }
 
-    handleFormSubmissions() {
-      let standup = document.getElementById('standup')
+    handleFormEvents() {
+      //-- Close the window
+      let close = document.getElementById('close');
+      close.addEventListener('click', (event) => {
+        window.close();
+      });
+
+      //-- Trigger Enabled (as a 1-click event)
+      let enabled = document.getElementById('enabled');
+      enabled.addEventListener('click', (event) => {
+        this.data.enabled = enabled.checked;
+        this.save();
+      });
+
+      //-- Trigger Standup (as a 1-click event)
+      let standup = document.getElementById('standup');
       standup.addEventListener('click', (event) => {
         console.log('you clicked it!', standup.checked, event);
         this.data.standup = standup.checked;
-        console.log('css', this.defaults.standupCss);
         this.save();
       });
 

@@ -7,14 +7,27 @@ class BetterJira
     this.Storage = chrome.storage.sync;
   }
 
-  preemptiveStrike() {
-    document.body.classList.add('better-jira');
-    this.Storage.get('poolWidth', (storage) => {
-      if(storage.poolWidth < 10 || isNaN(storage.poolWidth)) {
+  ifEnabled(successCallback, failureCallback) {
+    this.Storage.get('enabled', (storage) => {
+      if(!storage.enabled) {
+        if(typeof failureCallback === 'function') failureCallback();
         return;
       }
-      console.log('Preemptively setting width now');
-      this._setPoolWidth(storage.poolWidth);
+
+      successCallback();
+    });
+  }
+
+  preemptiveStrike() {
+    document.body.classList.add('better-jira');
+    this.ifEnabled(() => {
+      this.Storage.get('poolWidth', (storage) => {
+        if(storage.poolWidth < 10 || isNaN(storage.poolWidth)) {
+          return;
+        }
+        console.log('Preemptively setting width now');
+        this._setPoolWidth(storage.poolWidth);
+      });
     });
   }
 

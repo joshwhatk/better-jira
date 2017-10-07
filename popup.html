@@ -1,54 +1,39 @@
 <!doctype html>
-<!--
- This page is shown when the extension button is clicked, because the
- "browser_action" field in manifest.json contains the "default_popup" key with
- value "popup.html".
- -->
 <html>
   <head>
     <title>Better JIRA</title>
     <link href="https://fonts.googleapis.com/css?family=Montserrat|Raleway" rel="stylesheet">
-    <style>
-      body {
-        font-family: "Raleway", Helvetica, sans-serif;
-        font-size: 100%;
-        width: 450px;
-      }
-      h1 {
-        font-family: "Montserrat", Helvetica, sans-serif;
-      }
-      form {
-        height: 100%;
-        width: 100%;
-      }
-      form p {
-        color: #808080;
-        font-size: 0.9rem;
-      }
-
-      .row {
-        margin-bottom: 0.5rem;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="dist/css/popup.css">
     <script src="dist/js/popup.js"></script>
   </head>
   <body>
-    <h1>Better JIRA</h1>
-    <form id="better-jira">
-      <p>Turn the changes on/off.</p>
-      <div class="row">
-        <label><input type="checkbox" id="enabled" name="enabled"> Enabled</label>
-      </div>
-      <p>Toggle Standup Mode.</p>
-      <div class="row">
-        <label><input type="checkbox" id="standup" name="standup"> Standup Mode</label>
-      </div>
-      <p>Set your default Kanban Column Width.</p>
-      <div class="row">
-        <label for="columnWidth">Column width</label>
-        <input type="text" name="columnWidth" id="columnWidth">
-      </div>
-      <input type="submit" name="Save">
-    </form>
+    <header>
+      <h1>Better JIRA</h1>
+      <span id="close" class="close">&nbsp;&plus;&nbsp;</span>
+    </header>
+    <main>
+      <form id="better-jira">
+        <div class="row">
+          <div class="col-6">
+            <p>Turn the changes on/off.</p>
+            <label class="checkbox"><input type="checkbox" id="enabled" name="enabled"> Enabled</label>
+          </div>
+          <div class="col-6">
+            <p>Toggle Standup Mode.</p>
+            <label class="checkbox"><input type="checkbox" id="standup" name="standup"> Standup Mode</label>
+          </div>
+        </div>
+        <p>Set your default Kanban Column Width.</p>
+        <div class="card">
+          <div class="row">
+            <div class="form-element">
+              <label for="columnWidth">Column width</label>
+              <input type="number" id="columnWidth" name="columnWidth" step="10">
+            </div>
+            <input type="submit" name="Save" value="Resize">
+          </div>
+        </div>
+      </form>
+    </main>
   </body>
 </html>

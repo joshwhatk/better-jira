@@ -1,29 +1,30 @@
 class Standup {
   constructor() {
+    this.cssClass = 'standup';
     this.data = {
       listening: false,
     };
   }
 
   run(state) {
-    let cssClass = 'standup';
-    if(state) {
-      document.getElementsByTagName('body')[0].classList.add(cssClass);
-      if(!this.listening) {
-        window.addEventListener('keydown', this.doStandup.bind(this));
-        this.listening = true;
-        let el = document.createElement('div');
-        el.classList.add('instructions');
-        el.innerHTML = `<ul><li>Press <kbd>S</kbd> to start walking the board</li>
-          <li>Use <kbd>Shift</kbd> + <kbd>&larr;</kbd>/<kbd>&rarr;</kbd> to move up and down the board.</li></ul>`;
-        document.body.appendChild(el);
-      }
-      this.initializeStandup();
-    } else {
-      document.getElementsByTagName('body')[0].classList.remove(cssClass);
+    let body = document.querySelector('body');
+    if(!state) {
+      body.classList.remove(this.cssClass);
       this.cleanupStandup();
+      return;
     }
 
+    body.classList.add(this.cssClass);
+    if(!this.listening) {
+      window.addEventListener('keydown', this.doStandup.bind(this));
+      this.listening = true;
+      let instructionsEl = document.createElement('div');
+      instructionsEl.classList.add('instructions');
+      instructionsEl.innerHTML = `<ul><li>Press <kbd>S</kbd> to start walking the board</li>
+        <li>Use <kbd>Shift</kbd> + <kbd>&larr;</kbd>/<kbd>&rarr;</kbd> to move up and down the board.</li></ul>`;
+      document.body.appendChild(instructionsEl);
+    }
+    this.initializeStandup();
   }
 
   initializeStandup() {
