@@ -40,6 +40,12 @@ class DetailResizer {
 
   manageMouse(event) {
     let width = (event.screenX * -1) + 2;
+    if((window.newJira !== undefined && window.newJira) || document.querySelector('.adg3') !== null) {
+      width = width - 32;
+      window.newJira = true;
+    } else {
+      window.newJira = false;
+    }
     document.documentElement.style.setProperty('--detail-view-width', `${width}px`);
   }
 

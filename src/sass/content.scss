@@ -64,7 +64,7 @@ body.better-jira {
     border-bottom: 25px solid transparent;
   }
 
-  .adg3 .ghx-detail-contents {
-    border-left: 1px solid #d4d4d4;
+  &.adg3 #ghx-detail-contents {
+    border-left: 1px solid #d4d4d4 !important;
   }
 }
