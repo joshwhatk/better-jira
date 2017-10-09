@@ -6,7 +6,7 @@ To install, visit this link: [Chrome Web Store](https://chrome.google.com/websto
 
 ## Planned features:
 - [ ] Set custom width for detail view
-- [ ] Resizeable Detail view (via drag)
+- [x] Resizeable Detail view (via drag)
 - [x] Adding a standup view to give more space
 - [x] Adding a toggle to turn the extension off from within it’s menu
 - [ ] Adding an intuitive interface for inputing large numbers of tickets
