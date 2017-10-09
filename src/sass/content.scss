@@ -1,5 +1,6 @@
 :root {
   --viewport-width: 2000px;
+  --detail-view-width: 32vw;
 }
 
 body.better-jira {
@@ -21,7 +22,7 @@ body.better-jira {
 
   /* story detail view coulmn */
   #ghx-detail-view {
-    width: 32vw !important;
+    width: var(--detail-view-width) !important;
     position: relative;
     z-index: 3;
   }
@@ -29,5 +30,41 @@ body.better-jira {
   /* Prevent column headers from overlapping when scrolling vertically */
   .aui-sidebar {
     z-index: 2;
+  }
+
+  /*
+  |--------------------------------------------------------------------------
+  | Resizable Details View
+  |--------------------------------------------------------------------------
+  */
+
+  #ghx-detail-view {
+    .better-resize {
+      opacity: 0;
+    }
+
+    &:hover {
+      .better-resize {
+        opacity: 1
+      }
+    }
+  }
+
+  .better-resize {
+    z-index: 90;
+    width: 2px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: col-resize;
+    border-right: 1px solid #d4d4d4;
+    transition: opacity 0.3s ease-in-out;
+    height: calc(100% - 65px);
+    border-top: 25px solid transparent;
+    border-bottom: 25px solid transparent;
+  }
+
+  .adg3 .ghx-detail-contents {
+    border-left: 1px solid #d4d4d4;
   }
 }

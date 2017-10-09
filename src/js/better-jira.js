@@ -1,4 +1,5 @@
 import Standup from './components/Standup';
+import DetailResizer from './components/DetailResizer';
 
 class BetterJira
 {
@@ -25,15 +26,23 @@ class BetterJira
         if(storage.poolWidth < 10 || isNaN(storage.poolWidth)) {
           return;
         }
-        console.log('Preemptively setting width now');
+        console.log('🔧: Preemptively setting width now');
         this._setPoolWidth(storage.poolWidth);
+      });
+
+      this.Storage.get('detailViewWidth', (storage) => {
+        if(storage.detailViewWidth === undefined) {
+          return;
+        }
+        console.log('🔧: Setting Detail View width now!');
+        this._setDetailViewWidth(storage.detailViewWidth);
       });
     });
   }
 
   initiate() {
     window.removeEventListener('load', this.initiate, false);
-    console.log('Page loaded, running Better JIRA now.');
+    console.log('🔧: Page loaded, running Better JIRA now.');
 
     setTimeout(this._resizeColumns.bind(this), 700);
   }
@@ -102,14 +111,20 @@ class BetterJira
   _setPoolWidth(width) {
     document.documentElement.style.setProperty('--viewport-width', `${width}px`);
   }
+
+  _setDetailViewWidth(width) {
+    document.documentElement.style.setProperty('--detail-view-width', width);
+  }
 }
 
 let app = new BetterJira();
 window.addEventListener('load', app.initiate.bind(app), false);
 app.preemptiveStrike();
 
+DetailResizer.run();
+
 document.addEventListener('better-jira:updated', (event) => {
-  console.log('woohoo!', event.detail);
+  console.log('🔧: woohoo!', event.detail);
   app.updateColumnWidths(event.detail);
 
   Standup.run(event.detail.standup);
