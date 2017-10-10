@@ -2,6 +2,7 @@ class DetailResizer {
   constructor() {
     this.id = 'ghx-detail-view';
     this.Storage = chrome.storage.sync;
+    this.listening = false;
   }
 
   run() {
@@ -23,10 +24,16 @@ class DetailResizer {
         }
 
         document.addEventListener('mousemove', this.manageMouse);
+        this.listening = true;
       });
 
       document.addEventListener('mouseup', (event) => {
+        if(!this.listening) {
+          return;
+        }
+
         document.removeEventListener('mousemove', this.manageMouse);
+        this.listening = false;
 
         this.saveDetailViewWidth();
       });
@@ -39,7 +46,8 @@ class DetailResizer {
   }
 
   manageMouse(event) {
-    let width = (event.screenX * -1) + 2;
+    let width = (window.innerWidth - event.pageX) + 2;
+
     if((window.newJira !== undefined && window.newJira) || document.querySelector('.adg3') !== null) {
       width = width - 32;
       window.newJira = true;
@@ -50,6 +58,7 @@ class DetailResizer {
   }
 
   saveDetailViewWidth() {
+    console.log('🔧: Detail Width', document.documentElement.style.getPropertyValue('--detail-view-width'));
     this.Storage.set({detailViewWidth: document.documentElement.style.getPropertyValue('--detail-view-width')});
   }
 }
