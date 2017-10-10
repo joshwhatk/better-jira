@@ -68,3 +68,35 @@ body.better-jira {
     border-left: 1px solid #d4d4d4 !important;
   }
 }
+
+body.screenshot {
+  #js-work-quickfilters dd {
+    filter: blur(3px);
+  }
+
+  #ghx-view-selector {
+    filter: blur(5px);
+  }
+
+  .ghx-key-group {
+    filter: blur(3px);
+  }
+
+  .ghx-detail-summary {
+    filter: blur(4px);
+  }
+
+  #js-detail-nav-content {
+    filter: blur(4px);
+  }
+
+  //-- Cards
+  .ghx-wrap-issue {
+    section {
+      filter: blur(4px);
+    }
+    .ghx-grabber {
+      filter: blur(3px);
+    }
+  }
+}
