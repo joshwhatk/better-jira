@@ -103,6 +103,13 @@ class BetterJira
     if(width < 10) {
       return;
     }
+
+    //-- Handle Smaller Boards
+    if(width < window.innerWidth) {
+      let gh = document.querySelector('#gh');
+      width = (parseInt(gh.offsetWidth) - parseInt(window.getComputedStyle(gh, null).getPropertyValue('padding-left')));
+    }
+
     let items = {poolWidth: width};
     if(typeof items !== "object") {
       return;
