@@ -38,34 +38,14 @@ body.better-jira {
   |--------------------------------------------------------------------------
   */
 
-  #ghx-detail-view {
-    .better-resize {
-      opacity: 0;
-    }
-
-    &:hover {
-      .better-resize {
-        opacity: 1
-      }
-    }
-  }
-
   .better-resize {
     z-index: 90;
-    width: 2px;
+    width: 7px;
     position: absolute;
     top: 0;
-    left: 0;
+    left: -2px;
     cursor: col-resize;
-    border-right: 1px solid #d4d4d4;
-    transition: opacity 0.3s ease-in-out;
-    height: calc(100% - 65px);
-    border-top: 25px solid transparent;
-    border-bottom: 25px solid transparent;
-  }
-
-  &.adg3 #ghx-detail-contents {
-    border-left: 1px solid #d4d4d4 !important;
+    height: 100%;
   }
 }
 
