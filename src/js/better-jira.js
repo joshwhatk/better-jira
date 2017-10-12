@@ -103,7 +103,11 @@ class BetterJira
     if(width < 10) {
       return;
     }
-    this.Storage.set({poolWidth: width});
+    let items = {poolWidth: width};
+    if(typeof items !== "object") {
+      return;
+    }
+    this.Storage.set(items);
 
     this._setPoolWidth(width);
   }
