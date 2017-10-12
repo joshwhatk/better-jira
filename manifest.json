@@ -1,6 +1,6 @@
 {
    "browser_action": {
-      "default_icon": "icon.png",
+      "default_icon": "icon_16.png",
       "default_popup": "popup.html"
    },
    "content_scripts": [ {
@@ -8,6 +8,11 @@
       "js": [ "dist/js/better-jira.js" ],
       "matches": [ "https://*.atlassian.net/*" ]
    } ],
+   "icons": {
+      "16": "icon_16.png",
+      "48": "icon_48.png",
+      "128": "icon_128.png"
+   },
    "description": "Much needed interface improvements for Jira",
    "manifest_version": 2,
    "name": "Better Jira",
@@ -16,5 +21,5 @@
       "storage"
    ],
    "update_url": "https://clients2.google.com/service/update2/crx",
-   "version": "0.0.50"
+   "version": "0.0.51"
 }
