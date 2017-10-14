@@ -6,22 +6,28 @@ class BetterJira
   constructor() {
     this.data = {};
     this.Storage = chrome.storage.sync;
+    this.loadListener = null;
   }
 
-  ifEnabled(successCallback, failureCallback) {
-    this.Storage.get('enabled', (storage) => {
-      if(!storage.enabled) {
-        if(typeof failureCallback === 'function') failureCallback();
-        return;
-      }
+  initiate() {
+    this._preemptiveStrike();
 
-      successCallback();
-    });
+    this.loadListener = this._initialColumnResize.bind(this);
+    window.addEventListener('load', this.loadListener);
   }
 
-  preemptiveStrike() {
+  updateColumnWidths(detail) {
+    if(!detail.enabled) {
+      document.body.classList.remove('better-jira');
+      return;
+    }
     document.body.classList.add('better-jira');
-    this.ifEnabled(() => {
+    this._getPreferredWidth(detail)
+  }
+
+  _preemptiveStrike() {
+    document.body.classList.add('better-jira');
+    this._ifEnabled(() => {
       this.Storage.get('poolWidth', (storage) => {
         if(storage.poolWidth < 10 || isNaN(storage.poolWidth)) {
           return;
@@ -40,20 +46,22 @@ class BetterJira
     });
   }
 
-  initiate() {
-    window.removeEventListener('load', this.initiate, false);
+  _ifEnabled(successCallback, failureCallback) {
+    this.Storage.get('enabled', (storage) => {
+      if(!storage.enabled) {
+        if(typeof failureCallback === 'function') failureCallback();
+        return;
+      }
+
+      successCallback();
+    });
+  }
+
+  _initialColumnResize() {
+    window.removeEventListener('load', this.loadListener);
     console.log('🔧: Page loaded, running Better JIRA now.');
 
     setTimeout(this._resizeColumns.bind(this), 700);
-  }
-
-  updateColumnWidths(detail) {
-    if(!detail.enabled) {
-      document.body.classList.remove('better-jira');
-      return;
-    }
-    document.body.classList.add('better-jira');
-    this._getPreferredWidth(detail)
   }
 
   _resizeColumns() {
@@ -62,15 +70,15 @@ class BetterJira
     }
 
     //-- Disallow setting columns if the plugin is not enabled
-    this.Storage.get('enabled', (storage) => {
-      if(!storage.enabled) {
-        document.body.classList.remove('better-jira');
-        return;
-      }
+    let enabled = () => {
       document.body.classList.add('better-jira');
 
       this.Storage.get('columnWidth', this._getPreferredWidth.bind(this));
-    });
+    };
+    let disabled = () => {
+      document.body.classList.remove('better-jira');
+    };
+    this._ifEnabled(enabled.bind(this), disabled.bind(this));
 
     this.Storage.get('standup', (storage) => {
       Standup.run(storage.standup);
@@ -110,13 +118,14 @@ class BetterJira
       width = (parseInt(gh.offsetWidth) - parseInt(window.getComputedStyle(gh, null).getPropertyValue('padding-left')));
     }
 
-    let items = {poolWidth: width};
-    if(typeof items !== "object") {
-      return;
-    }
-    this.Storage.set(items);
+    try {
+      let items = {poolWidth: width};
+      this.Storage.set(items);
 
-    this._setPoolWidth(width);
+      this._setPoolWidth(width);
+    } catch(e) {
+      console.error(e);
+    }
   }
 
   _setPoolWidth(width) {
@@ -128,15 +137,13 @@ class BetterJira
   }
 }
 
-let app = new BetterJira();
-window.addEventListener('load', app.initiate.bind(app), false);
-app.preemptiveStrike();
-
+let betterJira = new BetterJira();
+betterJira.initiate();
 DetailResizer.run();
 
 document.addEventListener('better-jira:updated', (event) => {
   console.log('🔧: woohoo!', event.detail);
-  app.updateColumnWidths(event.detail);
+  betterJira.updateColumnWidths(event.detail);
 
   Standup.run(event.detail.standup);
 });
