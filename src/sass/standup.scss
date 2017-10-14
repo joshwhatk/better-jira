@@ -1,7 +1,11 @@
 $nice-blue: #3b7fc4;
 body.standup {
-  #ghx-header, #ghx-operations, #header, .aui-sidebar {
+  #ghx-header, #header, .aui-sidebar {
     display: none;
+  }
+
+  #ghx-operations {
+    padding-top: 1rem;
   }
 
   #gh {
