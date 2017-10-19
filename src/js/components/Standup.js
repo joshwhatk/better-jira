@@ -1,9 +1,8 @@
 class Standup {
   constructor() {
     this.cssClass = 'standup';
-    this.data = {
-      listening: false,
-    };
+    this.data = {};
+    this.standupListener = this.doStandup.bind(this);
   }
 
   run(state) {
@@ -14,20 +13,23 @@ class Standup {
       return;
     }
 
+    //-- Add `standup` class to the body
     body.classList.add(this.cssClass);
-    if(!this.listening) {
-      window.addEventListener('keydown', this.doStandup.bind(this));
-      this.listening = true;
-      let instructionsEl = document.createElement('div');
-      instructionsEl.classList.add('instructions');
-      instructionsEl.innerHTML = `<ul><li>Press <kbd>S</kbd> to start walking the board</li>
-        <li>Use <kbd>Shift</kbd> + <kbd>&larr;</kbd>/<kbd>&rarr;</kbd> to move up and down the board.</li></ul>`;
-      document.body.appendChild(instructionsEl);
-    }
+
+    //-- Start listening for keystrokes
+    window.addEventListener('keydown', this.standupListener);
+
+    //-- Add Instructions element
+    let instructionsEl = document.createElement('div');
+    instructionsEl.classList.add('instructions');
+    instructionsEl.innerHTML = `<ul><li>Press <kbd>S</kbd> to start walking the board</li>
+      <li>Use <kbd>Shift</kbd> + <kbd>&larr;</kbd>/<kbd>&rarr;</kbd> to move up and down the board.</li></ul>`;
+    document.body.appendChild(instructionsEl);
     this.initializeStandup();
   }
 
   initializeStandup() {
+    window.standup = true;
     this.data.swimlanes = [];
     Array.from(document.querySelectorAll('.ghx-swimlane')).forEach((el) => {
       let columns = el.querySelectorAll('.ghx-columns > .ghx-column');
@@ -44,9 +46,15 @@ class Standup {
   }
 
   cleanupStandup() {
+    window.standup = false;
+    window.removeEventListener('keydown', this.standupListener);
+
     if(this.data.pointer === undefined || this.data.swimlanes === undefined) {
       return;
     }
+
+    //-- remove Instructions element
+    document.querySelector('.instructions').remove();
 
     this._clearColumnBackground();
   }
