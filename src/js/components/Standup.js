@@ -1,20 +1,26 @@
+import shouldInitiate from '../closures/shouldInitiate';
+
 class Standup {
   constructor() {
     this.cssClass = 'standup';
     this.data = {};
     this.standupListener = this.doStandup.bind(this);
+    this.running = true;
   }
 
   run(state) {
-    let body = document.querySelector('body');
-    if(!state) {
-      body.classList.remove(this.cssClass);
+    if (!shouldInitiate()) {
+      this.running = false;
+      return;
+    }
+
+    if (!state) {
       this.cleanupStandup();
       return;
     }
 
     //-- Add `standup` class to the body
-    body.classList.add(this.cssClass);
+    document.body.classList.add(this.cssClass);
 
     //-- Start listening for keystrokes
     window.addEventListener('keydown', this.standupListener);
@@ -29,6 +35,10 @@ class Standup {
   }
 
   initializeStandup() {
+    if (!this.running) {
+      return;
+    }
+
     window.standup = true;
     this.data.swimlanes = [];
     Array.from(document.querySelectorAll('.ghx-swimlane')).forEach((el) => {
@@ -40,30 +50,40 @@ class Standup {
       this.data.swimlanes.push(columns);
     });
 
-    let headerColumns = document.getElementById('ghx-column-header-group').querySelectorAll('.ghx-column');
+    let headerColumns = document
+      .getElementById('ghx-column-header-group')
+      .querySelectorAll('.ghx-column');
     headerColumns[this.data.pointer].classList.add('large-column');
     this.data.swimlanes.push(headerColumns);
   }
 
   cleanupStandup() {
+    document.body.classList.remove(this.cssClass);
     window.standup = false;
     window.removeEventListener('keydown', this.standupListener);
 
-    if(this.data.pointer === undefined || this.data.swimlanes === undefined) {
+    if (this.data.pointer === undefined || this.data.swimlanes === undefined) {
       return;
     }
 
     //-- remove Instructions element
-    document.querySelector('.instructions').remove();
+    let instructions = document.querySelector('.instructions');
+    if (instructions !== null) {
+      instructions.remove();
+    }
 
     this._clearColumnBackground();
   }
 
   doStandup(event) {
+    if (!this.running) {
+      return;
+    }
+
     //-- Advance down the board
-    if(event.key === 'ArrowLeft' && event.shiftKey) {
+    if (event.key === 'ArrowLeft' && event.shiftKey) {
       event.preventDefault();
-      if((this.data.pointer - 1) < 0) {
+      if (this.data.pointer - 1 < 0) {
         return;
       }
 
@@ -73,9 +93,9 @@ class Standup {
     }
 
     //-- Advance up the board
-    if(event.key === 'ArrowRight' && event.shiftKey) {
+    if (event.key === 'ArrowRight' && event.shiftKey) {
       event.preventDefault();
-      if((this.data.pointer + 1) === this.data.columnCount) {
+      if (this.data.pointer + 1 === this.data.columnCount) {
         return;
       }
 
@@ -92,9 +112,13 @@ class Standup {
   }
 
   _setColumnBackground() {
+    if (!this.running) {
+      return;
+    }
+
     this.data.swimlanes.forEach((columns) => {
       columns[this.data.pointer].classList.add('large-column');
     });
   }
 }
-export default new Standup;
+export default new Standup();

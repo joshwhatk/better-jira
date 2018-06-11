@@ -1,15 +1,25 @@
+import shouldInitiate from '../closures/shouldInitiate';
+
 class DetailResizer {
   constructor() {
     this.id = 'ghx-detail-view';
     this.Storage = chrome.storage.sync;
     this.listening = false;
+    this.running = true;
+    this.manageMouseListener = this.manageMouse.bind(this);
   }
 
   run() {
-    let detailView = document.getElementById(this.id);
-    detailView.addEventListener('mouseenter', () => {
+    if (!shouldInitiate()) {
+      return this.dontRun();
+    }
 
-      if(detailView.querySelector('.better-resize') !== null) {
+    let detailView = document.getElementById(this.id);
+    if (!detailView) {
+      return this.dontRun();
+    }
+    detailView.addEventListener('mouseenter', () => {
+      if (detailView.querySelector('.better-resize') !== null) {
         return;
       }
 
@@ -17,22 +27,24 @@ class DetailResizer {
       resizer.classList.add('better-resize');
       detailView.appendChild(resizer);
 
-      detailView.querySelector('.better-resize').addEventListener('mousedown', (event) => {
-        event.preventDefault();
-        if(event.button === 2) {
-          return;
-        }
+      detailView
+        .querySelector('.better-resize')
+        .addEventListener('mousedown', (event) => {
+          event.preventDefault();
+          if (event.button === 2) {
+            return;
+          }
 
-        document.addEventListener('mousemove', this.manageMouse);
-        this.listening = true;
-      });
+          document.addEventListener('mousemove', this.manageMouseListener);
+          this.listening = true;
+        });
 
       document.addEventListener('mouseup', (event) => {
-        if(!this.listening) {
+        if (!this.listening) {
           return;
         }
 
-        document.removeEventListener('mousemove', this.manageMouse);
+        document.removeEventListener('mousemove', this.manageMouseListener);
         this.listening = false;
 
         this.saveDetailViewWidth();
@@ -46,20 +58,37 @@ class DetailResizer {
   }
 
   manageMouse(event) {
-    let width = (window.innerWidth - event.pageX) + 2;
-
-    if((window.newJira !== undefined && window.newJira) || document.querySelector('.adg3') !== null) {
-      width = width - 32;
-      window.newJira = true;
-    } else {
-      window.newJira = false;
+    if (!this.running) {
+      return;
     }
-    document.documentElement.style.setProperty('--detail-view-width', `${width}px`);
+
+    let width = window.innerWidth - event.pageX + 2;
+
+    document.documentElement.style.setProperty(
+      '--detail-view-width',
+      `${width}px`
+    );
   }
 
   saveDetailViewWidth() {
-    console.log('🔧: Detail Width', document.documentElement.style.getPropertyValue('--detail-view-width'));
-    this.Storage.set({detailViewWidth: document.documentElement.style.getPropertyValue('--detail-view-width')});
+    if (!this.running) {
+      return;
+    }
+
+    console.log(
+      '🔧: Detail Width',
+      document.documentElement.style.getPropertyValue('--detail-view-width')
+    );
+    this.Storage.set({
+      detailViewWidth: document.documentElement.style.getPropertyValue(
+        '--detail-view-width'
+      )
+    });
+  }
+
+  dontRun() {
+    this.running = false;
   }
 }
-export default new DetailResizer;
+
+export default new DetailResizer();
