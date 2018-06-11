@@ -34,10 +34,10 @@ class BetterJira {
   _reload() {
     this.Storage.get(['enabled', 'columnWidth'], (storage) => {
       let updateWidths = () => {
-        console.log('🔧: Attempting to update the widths now!', storage);
+        // console.log('🔧: Attempting to update the widths now!', storage);
 
         if (!document.querySelector('.ghx-swimlane > .ghx-columns')) {
-          console.log('🔧: Waiting...');
+          // console.log('🔧: Waiting...');
 
           setTimeout(() => {
             updateWidths();
@@ -45,7 +45,7 @@ class BetterJira {
           return;
         }
 
-        console.log('🔧: Updating the widths now!');
+        // console.log('🔧: Updating the widths now!');
         this._updateColumnWidths(storage);
       };
       setTimeout(() => {
@@ -219,13 +219,13 @@ class BetterJira {
       return;
     }
     boardSwitcher.addEventListener('click', (event) => {
-      console.log('🔧: Preparing to switch to a new board!', event);
+      // console.log('🔧: Preparing to switch to a new board!', event);
 
       setTimeout(() => {
         let boardsDroplist = document.querySelector(
           '[aria-label="Boards in this Project"]'
         );
-        console.log('🔧: boardsDroplist', boardsDroplist);
+        // console.log('🔧: boardsDroplist', boardsDroplist);
         if (!boardsDroplist) {
           return;
         }
