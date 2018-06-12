@@ -5,6 +5,7 @@ Ever wished that large Kanban boards could not be squished? Now you can set your
 To install, visit this link: [Chrome Web Store](https://chrome.google.com/webstore/detail/better-jira/adjlkmhgnjccbagimdppnminndehkmgl).
 
 ## Planned features:
+
 - [ ] Set custom width for detail view
 - [x] Resizeable Detail view (via drag)
 - [x] Adding a standup view to give more space
@@ -15,5 +16,5 @@ To install, visit this link: [Chrome Web Store](https://chrome.google.com/websto
 - [ ] Icon change when active/enabled
 - [ ] Add card overview when on a specific card in Standup Mode.
 - [ ] Standup Variant (access to the filters and assignee drop downs) [add a visual element for displaying filters, remember status]
-- [ ] Firefox Plugin
+- [x] Firefox Plugin
 - [ ] Safari Plugin
