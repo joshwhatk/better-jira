@@ -1,10 +1,10 @@
 import DetailResizer from './components/DetailResizer';
 import BetterJira from './components/BetterJira';
 
-BetterJira.initiate();
+let betterJira = BetterJira.initialize();
 DetailResizer.run();
 
 document.addEventListener('better-jira:updated', (event) => {
-  console.log('🔧: woohoo!', event.detail);
-  BetterJira.update(event);
+  console.log('🔧: ', event.detail);
+  betterJira.update(event);
 });

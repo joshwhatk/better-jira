@@ -1,4 +1,4 @@
-import shouldInitiate from '../closures/shouldInitiate';
+import Jira from './Jira';
 
 class Standup {
   constructor() {
@@ -9,7 +9,7 @@ class Standup {
   }
 
   run(state) {
-    if (!shouldInitiate()) {
+    if (Jira.isNotPresent()) {
       this.running = false;
       return;
     }
