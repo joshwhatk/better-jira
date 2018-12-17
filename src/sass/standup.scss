@@ -3,7 +3,9 @@ $nice-blue: #3b7fc4;
 @import 'components/close';
 
 body.standup {
-  #ghx-header, #header, .aui-sidebar {
+  #ghx-header,
+  #header,
+  .aui-sidebar {
     display: none;
   }
 
@@ -20,16 +22,7 @@ body.standup {
     height: 100vh;
   }
   #ghx-work {
-    height: 100vh !important;
-  }
-
-  #ghx-column-header-group .large-column {
-    // background-color: white;
-  }
-
-  .large-column {
-    width: 400px !important;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+    height: calc(100vh - 71px) !important;
   }
 
   .instructions {
@@ -66,8 +59,6 @@ body.standup {
 
     #content {
       margin-left: 1rem;
-      margin-right: 0;
     }
   }
-
 }
