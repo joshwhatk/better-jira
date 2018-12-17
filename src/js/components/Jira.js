@@ -1,30 +1,58 @@
-export default class Jira {
-  static isPresent() {
+class Jira {
+  constructor() {
+    this._isPresent = null;
+    this._columnsContainer = null;
+    this._columns = null;
+  }
+
+  isPresent() {
+    if (this._isPresent !== null) {
+      return this._isPresent;
+    }
+
     try {
       let jira = document.querySelector('meta[name="application-name"]');
-      return jira.content === 'JIRA';
+      return (this._isPresent = jira.content === 'JIRA');
     } catch (e) {
-      return false;
+      return (this._isPresent = false);
     }
   }
 
-  static isNotPresent() {
-    return !Jira.isPresent();
+  isNotPresent() {
+    return !this.isPresent();
   }
 
-  static hasLoadedSwimlanes() {
-    return !!document.querySelector('.ghx-swimlane');
+  hasLoadedSwimlanes() {
+    return !!document.querySelector('.ghx-swimlane, #ghx-mapping');
   }
 
-  static hasNotLoadedSwimlanes() {
-    return !Jira.hasLoadedSwimlanes();
+  hasNotLoadedSwimlanes() {
+    return !this.hasLoadedSwimlanes();
   }
 
-  static columns() {
-    return document.querySelector('.ghx-swimlane > .ghx-columns');
+  columnsContainer() {
+    if (this._columnsContainer !== null) {
+      return this._columnsContainer;
+    }
+
+    return (this._columnsContainer = document.querySelector(
+      '.ghx-swimlane > .ghx-columns, #ghx-mapping'
+    ));
   }
 
-  static content() {
+  columns() {
+    if (this._columns !== null) {
+      return this._columns;
+    }
+
+    return (this._columns = this.columnsContainer().querySelectorAll(
+      '.ghx-column, .ghx-column-wrapper'
+    ));
+  }
+
+  content() {
     return document.getElementById('content');
   }
 }
+
+export default new Jira();

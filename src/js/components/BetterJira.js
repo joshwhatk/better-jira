@@ -105,7 +105,7 @@ export default class BetterJira {
 
     preferredWidth = this.data.columnWidth;
 
-    columnCount = Jira.columns().querySelectorAll('.ghx-column').length;
+    columnCount = Jira.columns().length;
 
     padding = columnCount * 12;
     width = columnCount * preferredWidth + padding;
