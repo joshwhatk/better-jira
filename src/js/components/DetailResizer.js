@@ -1,4 +1,4 @@
-import shouldInitiate from '../closures/shouldInitiate';
+import Jira from './Jira';
 
 class DetailResizer {
   constructor() {
@@ -10,13 +10,15 @@ class DetailResizer {
   }
 
   run() {
-    if (!shouldInitiate()) {
-      return this.dontRun();
+    if (Jira.isNotPresent()) {
+      this.running = false;
+      return;
     }
 
     let detailView = document.getElementById(this.id);
     if (!detailView) {
-      return this.dontRun();
+      this.running = false;
+      return;
     }
     detailView.addEventListener('mouseenter', () => {
       if (detailView.querySelector('.better-resize') !== null) {
@@ -84,10 +86,6 @@ class DetailResizer {
         '--detail-view-width'
       )
     });
-  }
-
-  dontRun() {
-    this.running = false;
   }
 }
 

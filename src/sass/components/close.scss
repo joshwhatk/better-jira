@@ -1,0 +1,23 @@
+@mixin close-button($error-color: #991818, $absolute-positioning: true) {
+  .close {
+    @if ($absolute-positioning) {
+      position: absolute;
+      right: -2px;
+      top: 0px;
+    } @else {
+      display: inline-block;
+      vertical-align: bottom;
+      line-height: 0.83;
+    }
+    font-size: 1.7rem;
+    font-family: verdana;
+    transform: rotate(45deg);
+    cursor: pointer;
+    user-select: none;
+    color: $error-color;
+
+    &:hover {
+      color: darken($error-color, 20%);
+    }
+  }
+}

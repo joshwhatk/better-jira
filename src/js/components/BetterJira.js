@@ -1,58 +1,30 @@
-import shouldInitiate from '../closures/shouldInitiate';
 import Standup from './Standup';
+import Jira from './Jira';
 
-class BetterJira {
+export default class BetterJira {
+  static initialize() {
+    return new this();
+  }
+
   constructor() {
     this.data = {};
     this.Storage = chrome.storage.sync;
-    this.loadListener = null;
     this.running = true;
-  }
 
-  initiate() {
-    if (!shouldInitiate()) {
+    if (Jira.isNotPresent()) {
       this.running = false;
       return;
     }
 
-    this._preemptiveStrike();
-
-    this.loadListener = this._onLoad.bind(this);
-    window.addEventListener('load', this.loadListener);
+    this._initialColumnResize();
+    this.Storage.get('standup', (storage) => {
+      this._initiateStandup(storage.standup);
+    });
   }
 
   update(event) {
     this._updateColumnWidths(event.detail);
     this._initiateStandup(event.detail.standup);
-  }
-
-  _onLoad() {
-    this._initialColumnResize();
-    this._protectAgainstReactBoardReloading();
-  }
-
-  _reload() {
-    this.Storage.get(['enabled', 'columnWidth'], (storage) => {
-      let updateWidths = () => {
-        // console.log('🔧: Attempting to update the widths now!', storage);
-
-        if (!document.querySelector('.ghx-swimlane > .ghx-columns')) {
-          // console.log('🔧: Waiting...');
-
-          setTimeout(() => {
-            updateWidths();
-          }, 700);
-          return;
-        }
-
-        // console.log('🔧: Updating the widths now!');
-        this._updateColumnWidths(storage);
-      };
-      setTimeout(() => {
-        updateWidths();
-      }, 700);
-    });
-    this._protectAgainstReactBoardReloading();
   }
 
   _updateColumnWidths(detail) {
@@ -68,43 +40,18 @@ class BetterJira {
     this._getPreferredWidth(detail);
   }
 
-  _preemptiveStrike() {
-    if (!this.running) {
-      return;
-    }
-
-    document.body.classList.add('better-jira');
-    this._ifEnabled(() => {
-      this.Storage.get('poolWidth', (storage) => {
-        if (storage.poolWidth < 10 || isNaN(storage.poolWidth)) {
-          return;
-        }
-        console.log('🔧: Preemptively setting width now');
-        this._setPoolWidth(storage.poolWidth);
-      });
-
-      this.Storage.get('detailViewWidth', (storage) => {
-        if (storage.detailViewWidth === undefined) {
-          return;
-        }
-        console.log('🔧: Setting Detail View width now!');
-        this._setDetailViewWidth(storage.detailViewWidth);
-      });
-    });
-  }
-
-  _ifEnabled(successCallback, failureCallback) {
+  _ifEnabled(enabledCallback, disabledCallback = () => {}) {
     if (!this.running) {
       return;
     }
 
     this.Storage.get('enabled', (storage) => {
       if (!storage.enabled) {
-        if (typeof failureCallback === 'function') failureCallback();
+        disabledCallback();
         return;
       }
 
-      successCallback();
+      enabledCallback();
     });
   }
 
@@ -113,35 +60,26 @@ class BetterJira {
       return;
     }
 
-    window.removeEventListener('load', this.loadListener);
-    console.log('🔧: Page loaded, running Better JIRA now.');
+    setTimeout(() => {
+      if (Jira.hasNotLoadedSwimlanes()) {
+        // console.log('🔧: Swimlanes not present, waiting 100ms.');
+        return this._initialColumnResize();
+      }
+      // console.log('🔧: Swimlanes are present, resizing now.');
 
-    setTimeout(this._resizeColumns.bind(this), 700);
-  }
+      let enabled = () => {
+        document.body.classList.add('better-jira');
 
-  _resizeColumns() {
-    if (!this.running) {
-      return;
-    }
+        this.Storage.get('columnWidth', this._getPreferredWidth.bind(this));
+        this._protectAgainstReactBoardReloading();
+      };
 
-    if (document.querySelector('.ghx-swimlane') === null) {
-      return;
-    }
-
-    //-- Disallow setting columns if the plugin is not enabled
-    let enabled = () => {
-      document.body.classList.add('better-jira');
-
-      this.Storage.get('columnWidth', this._getPreferredWidth.bind(this));
-    };
-    let disabled = () => {
-      document.body.classList.remove('better-jira');
-    };
-    this._ifEnabled(enabled.bind(this), disabled.bind(this));
-
-    this.Storage.get('standup', (storage) => {
-      this._initiateStandup(storage.standup);
-    });
+      //-- Disallow setting columns if the plugin is not enabled
+      let disabled = () => {
+        document.body.classList.remove('better-jira');
+      };
+      this._ifEnabled(enabled, disabled);
+    }, 100);
   }
 
   _getPreferredWidth(storage) {
@@ -167,9 +105,7 @@ class BetterJira {
 
     preferredWidth = this.data.columnWidth;
 
-    columnCount = document
-      .querySelector('.ghx-swimlane > .ghx-columns')
-      .querySelectorAll('.ghx-column').length;
+    columnCount = Jira.columns().length;
 
     padding = columnCount * 12;
     width = columnCount * preferredWidth + padding;
@@ -214,30 +150,26 @@ class BetterJira {
   }
 
   _protectAgainstReactBoardReloading() {
-    let boardSwitcher = document.querySelector('[aria-label="Switch boards"]');
-    if (!boardSwitcher) {
-      return;
-    }
-    boardSwitcher.addEventListener('click', (event) => {
-      // console.log('🔧: Preparing to switch to a new board!', event);
-
-      setTimeout(() => {
-        let boardsDroplist = document.querySelector(
-          '[aria-label="Boards in this Project"]'
-        );
-        // console.log('🔧: boardsDroplist', boardsDroplist);
-        if (!boardsDroplist) {
-          return;
+    var mutationObserver = new MutationObserver((mutations) => {
+      let contentHasBeenDeleted = mutations.find((mutation) => {
+        if (mutation.removedNodes < 1) {
+          return false;
         }
 
-        boardsDroplist.addEventListener('click', (event) => {
-          setTimeout(() => {
-            this._reload();
-          }, 1);
+        let removedNodes = [...mutation.removedNodes];
+        return removedNodes.find((node) => {
+          return node.id === 'ghx-pool-column';
         });
-      }, 1);
+      });
+
+      if (contentHasBeenDeleted) {
+        mutationObserver.disconnect();
+        this._initialColumnResize();
+      }
+    });
+    mutationObserver.observe(Jira.content(), {
+      childList: true,
+      subtree: true
     });
   }
 }
-
-export default new BetterJira();
