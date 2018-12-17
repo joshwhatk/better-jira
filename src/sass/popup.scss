@@ -3,6 +3,8 @@ $brand-primary: #1a5ca2;
 $error: #991818;
 $success: #1cb330;
 
+@import 'components/close';
+
 html {
   background-color: #f5f6f7;
   overflow: hidden;
@@ -30,21 +32,7 @@ main {
   //
 }
 
-.close {
-  position: absolute;
-  right: -2px;
-  top: 0px;
-  font-size: 1.7rem;
-  font-family: verdana;
-  transform: rotate(45deg);
-  cursor: pointer;
-  user-select: none;
-  color: $error;
-
-  &:hover {
-    color: darken($error, 20%);
-  }
-}
+@include close-button();
 
 h1 {
   margin: 0;

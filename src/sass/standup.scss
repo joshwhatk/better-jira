@@ -1,4 +1,7 @@
 $nice-blue: #3b7fc4;
+
+@import 'components/close';
+
 body.standup {
   #ghx-header, #header, .aui-sidebar {
     display: none;
@@ -31,28 +34,23 @@ body.standup {
 
   .instructions {
     position: fixed;
-    bottom: 0.2rem;
+    top: 0.2rem;
     right: 1rem;
     z-index: 2;
     border-radius: 3px;
     border: 1px solid #ccc;
     background-color: #f7f7f7;
-    box-shadow: 0 1px 0 rgba(0,0,0,0.2), 0 0 0 2px #fff inset;
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.2), 0 0 0 2px #fff inset;
     color: #333;
     text-shadow: 0 1px 0 #fff;
     padding: 0.5rem 1rem;
-    opacity: 0;
-    transition: opacity 0.6s ease-in-out;
+    margin-top: 0.8rem;
 
-    &:hover {
-      opacity: 1;
+    .text {
+      margin-right: -1rem;
     }
 
-    ul {
-      list-style: none;
-      padding-left: 0;
-      pointer-events: none;
-    }
+    @include close-button($absolute-positioning: false);
   }
 
   /*

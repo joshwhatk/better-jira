@@ -3,6 +3,7 @@ import Jira from './Jira';
 class Standup {
   constructor() {
     this.cssClass = 'standup';
+    this.instructionsCssClass = 'instructions';
     this.data = {};
     this.standupListener = this.doStandup.bind(this);
     this.running = true;
@@ -15,7 +16,7 @@ class Standup {
     }
 
     if (!state) {
-      this.cleanupStandup();
+      this._cleanupStandup();
       return;
     }
 
@@ -27,10 +28,23 @@ class Standup {
 
     //-- Add Instructions element
     let instructionsEl = document.createElement('div');
-    instructionsEl.classList.add('instructions');
-    instructionsEl.innerHTML = `<ul><li>Press <kbd>S</kbd> to start walking the board</li>
-      <li>Use <kbd>Shift</kbd> + <kbd>&larr;</kbd>/<kbd>&rarr;</kbd> to move up and down the board.</li></ul>`;
+    instructionsEl.classList.add(this.instructionsCssClass);
+    instructionsEl.innerHTML = `
+      <span class="text">Close Standup Mode <span close class="close">&nbsp;&plus;&nbsp;</span></span>
+    `;
     document.body.appendChild(instructionsEl);
+    let closeButton = document.querySelector(
+      `.${this.instructionsCssClass} [close]`
+    );
+    closeButton.addEventListener(
+      'click',
+      () => {
+        chrome.storage.sync.set({ standup: false }, () => {
+          this._cleanupStandup();
+        });
+      },
+      { once: true }
+    );
     this.initializeStandup();
   }
 
@@ -57,7 +71,7 @@ class Standup {
     this.data.swimlanes.push(headerColumns);
   }
 
-  cleanupStandup() {
+  _cleanupStandup() {
     document.body.classList.remove(this.cssClass);
     window.standup = false;
     window.removeEventListener('keydown', this.standupListener);
@@ -67,7 +81,7 @@ class Standup {
     }
 
     //-- remove Instructions element
-    let instructions = document.querySelector('.instructions');
+    let instructions = document.querySelector(`.${this.instructionsCssClass}`);
     if (instructions !== null) {
       instructions.remove();
     }
