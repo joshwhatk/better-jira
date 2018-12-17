@@ -5,7 +5,7 @@
     "watch": "NODE_ENV=development node_modules/webpack/bin/webpack.js --watch --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "prod": "NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "build:chrome": "zip -r build/chrome-better-jira.zip . -x './node_modules/*'  -x './.*' -x './build/*'",
-    "build:firefox": "zip -r build/firefox-better-jira.zip . -x './node_modules/*' -x './.*' -x './build/*' -x './src/*'"
+    "build:firefox": "zip -r build/firefox-better-jira.zip . -x './node_modules/*' -x './.*' -x './build/*'"
   },
   "devDependencies": {
     "laravel-mix": "^2.0.0"
