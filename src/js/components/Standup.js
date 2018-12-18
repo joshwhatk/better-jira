@@ -39,12 +39,14 @@ class Standup {
       <span class="text">Close Standup Mode <span close class="close">&nbsp;&plus;&nbsp;</span></span>
     `;
     document.body.appendChild(instructionsEl);
-    let closeButton = document.querySelector(
-      `.${this.instructionsCssClass} [close]`
-    );
-    closeButton.addEventListener(
+    document.addEventListener(
       'click',
-      () => {
+      (click) => {
+        let closeButton = click.target.closest('[close]');
+        if (!closeButton) {
+          return;
+        }
+
         chrome.storage.sync.set({ standup: false }, () => {
           this._cleanupStandup();
         });
