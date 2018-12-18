@@ -34,17 +34,20 @@ class Standup {
 
     //-- Add Instructions element
     let instructionsEl = document.createElement('div');
+    instructionsEl.setAttribute('standup-close', '');
     instructionsEl.classList.add(this.instructionsCssClass);
     instructionsEl.innerHTML = `
-      <span class="text">Close Standup Mode <span close class="close">&nbsp;&plus;&nbsp;</span></span>
+      <span class="text">Close Standup Mode <span class="close">&nbsp;&plus;&nbsp;</span></span>
     `;
     document.body.appendChild(instructionsEl);
-    let closeButton = document.querySelector(
-      `.${this.instructionsCssClass} [close]`
-    );
-    closeButton.addEventListener(
+    document.addEventListener(
       'click',
-      () => {
+      (click) => {
+        let closeButton = click.target.closest('[standup-close]');
+        if (!closeButton) {
+          return;
+        }
+
         chrome.storage.sync.set({ standup: false }, () => {
           this._cleanupStandup();
         });

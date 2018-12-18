@@ -1,5 +1,6 @@
 import Standup from './Standup';
 import Jira from './Jira';
+import OpenGithubInNewTab from './OpenGithubInNewTab';
 
 export default class BetterJira {
   static initialize() {
@@ -20,6 +21,7 @@ export default class BetterJira {
     this.Storage.get('standup', (storage) => {
       this._initiateStandup(storage.standup);
     });
+    this._openGithubLinksInNewTabs();
   }
 
   update(event) {
@@ -171,5 +173,9 @@ export default class BetterJira {
       childList: true,
       subtree: true
     });
+  }
+
+  _openGithubLinksInNewTabs() {
+    OpenGithubInNewTab.initialize();
   }
 }
