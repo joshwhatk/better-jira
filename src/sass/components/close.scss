@@ -1,14 +1,8 @@
-@mixin close-button($error-color: #991818, $absolute-positioning: true) {
+@mixin close-button($error-color: #991818, $top: 0px) {
   .close {
-    @if ($absolute-positioning) {
-      position: absolute;
-      right: -2px;
-      top: 0px;
-    } @else {
-      display: inline-block;
-      vertical-align: bottom;
-      line-height: 0.83;
-    }
+    position: absolute;
+    right: -2px;
+    top: $top;
     font-size: 1.7rem;
     font-family: verdana;
     transform: rotate(45deg);

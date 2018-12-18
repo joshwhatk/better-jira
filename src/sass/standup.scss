@@ -40,10 +40,10 @@ body.standup {
     margin-top: 0.8rem;
 
     .text {
-      margin-right: -1rem;
+      margin-right: 1.4rem;
     }
 
-    @include close-button($absolute-positioning: false);
+    @include close-button($top: 7px);
   }
 
   /*
