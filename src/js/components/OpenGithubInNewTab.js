@@ -12,11 +12,11 @@ export default class OpenGithubInNewTab {
         return;
       }
 
+      click.preventDefault();
       if (githubLink.classList.contains('create-pullrequest-link')) {
         this.enableBetterCreatePullRequestLink(githubLink);
       }
 
-      click.preventDefault();
       window.open(githubLink.href, '_blank');
     });
   }
