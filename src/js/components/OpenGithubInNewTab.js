@@ -17,7 +17,8 @@ export default class OpenGithubInNewTab {
         this.enableBetterCreatePullRequestLink(githubLink);
       }
 
-      window.open(githubLink.href, '_blank');
+      let newWindow = window.open(githubLink.href, '_blank');
+      newWindow.opener = null;
     });
   }
 
