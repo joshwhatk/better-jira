@@ -8,7 +8,7 @@
     "build:firefox": "zip -r build/firefox-better-jira.zip . -x './node_modules/*' -x './.*' -x './build/*'"
   },
   "devDependencies": {
-    "laravel-mix": "^2.0.0"
+    "laravel-mix": "^4.0.15"
   },
   "prettier": {
     "singleQuote": true,
