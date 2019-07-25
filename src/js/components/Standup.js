@@ -3,7 +3,7 @@ import Jira from './Jira';
 class Standup {
   constructor() {
     this.cssClass = 'standup';
-    this.instructionsCssClass = 'instructions';
+    this.instructionsCssClass = 'BetterJira-instructions';
     this.data = {};
     this.running = true;
   }
