@@ -18,3 +18,9 @@ To install, visit this link: [Chrome Web Store](https://chrome.google.com/websto
 - [x] Open Github Links in a New Tab
 - [x] Firefox Plugin
 - [ ] Safari Plugin
+
+## Running the code locally
+
+> **NOTE**: You will need `node` and `yarn` set up on your computer.
+
+Type `yarn run` into your terminal from the root of this project. It will output the available commands.
