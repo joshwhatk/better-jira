@@ -45,7 +45,7 @@ body.standup {
         margin-right: 1.4rem;
       }
 
-      @include close-button($top: 7px);
+      @include close-button($top: -3px);
     }
   }
 
@@ -58,6 +58,10 @@ body.standup {
   &.adg3 {
     #navigation-app {
       display: none;
+    }
+
+    #page-body > #content {
+      border-top: 0px solid transparent;
     }
 
     #content {

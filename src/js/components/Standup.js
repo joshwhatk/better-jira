@@ -27,6 +27,18 @@ class Standup {
       return;
     }
 
+    this._listener = (click) => {
+      let closeButton = click.target.closest('[data-standup-close]');
+      if (!closeButton) {
+        return;
+      }
+
+      chrome.storage.sync.set({ standup: false }, () => {
+        this._cleanupStandup();
+      });
+    };
+    document.addEventListener('click', this._listener);
+
     window.standup = true;
 
     //-- Add `standup` class to the body
@@ -34,31 +46,20 @@ class Standup {
 
     //-- Add Instructions element
     let instructionsEl = document.createElement('div');
-    instructionsEl.setAttribute('standup-close', '');
+    instructionsEl.setAttribute('data-standup-close', '');
     instructionsEl.classList.add(this.instructionsCssClass);
     instructionsEl.innerHTML = `
       <span class="text">Close Standup Mode <span class="close">&nbsp;&plus;&nbsp;</span></span>
     `;
     document.body.appendChild(instructionsEl);
-    document.addEventListener(
-      'click',
-      (click) => {
-        let closeButton = click.target.closest('[standup-close]');
-        if (!closeButton) {
-          return;
-        }
-
-        chrome.storage.sync.set({ standup: false }, () => {
-          this._cleanupStandup();
-        });
-      },
-      { once: true }
-    );
   }
 
   _cleanupStandup() {
     document.body.classList.remove(this.cssClass);
     window.standup = false;
+
+    //-- Clear the event listener
+    document.removeEventListener('click', this._listener);
 
     //-- remove Instructions element
     let instructions = document.querySelector(`.${this.instructionsCssClass}`);
