@@ -8,7 +8,8 @@ body.better-jira {
   #ghx-pool-column {
     overflow-y: hidden;
   }
-  #ghx-pool {
+  #ghx-pool,
+  #jira-board {
     width: var(--viewport-width);
   }
 

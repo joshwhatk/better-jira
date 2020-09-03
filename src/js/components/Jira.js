@@ -23,7 +23,9 @@ class Jira {
   }
 
   hasLoadedSwimlanes() {
-    return !!document.querySelector('.ghx-swimlane, #ghx-mapping');
+    return !!document.querySelector(
+      '.ghx-swimlane, #ghx-mapping, #jira-board > div > div'
+    );
   }
 
   hasNotLoadedSwimlanes() {
@@ -36,7 +38,7 @@ class Jira {
     }
 
     return (this._columnsContainer = document.querySelector(
-      '.ghx-swimlane > .ghx-columns, #ghx-mapping'
+      '.ghx-swimlane > .ghx-columns, #ghx-mapping, .aui-page-panel-content > #jira-board'
     ));
   }
 
@@ -46,7 +48,7 @@ class Jira {
     }
 
     return (this._columns = this.columnsContainer().querySelectorAll(
-      '.ghx-column, .ghx-column-wrapper'
+      '.ghx-column, .ghx-column-wrapper, [class*="hook__column"]'
     ));
   }
 

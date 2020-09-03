@@ -118,11 +118,13 @@ export default class BetterJira {
 
     //-- Handle Smaller Boards
     if (width < window.innerWidth) {
-      let gh = document.querySelector('#gh');
+      let container = document.querySelector('#gh, #content > .aui-page-panel');
       width =
-        parseInt(gh.offsetWidth) -
+        parseInt(container.offsetWidth) -
         parseInt(
-          window.getComputedStyle(gh, null).getPropertyValue('padding-left')
+          window
+            .getComputedStyle(container, null)
+            .getPropertyValue('padding-left')
         );
     }
 
@@ -171,7 +173,7 @@ export default class BetterJira {
     });
     mutationObserver.observe(Jira.content(), {
       childList: true,
-      subtree: true
+      subtree: true,
     });
   }
 
