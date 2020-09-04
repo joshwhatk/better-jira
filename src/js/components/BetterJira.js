@@ -173,7 +173,7 @@ export default class BetterJira {
     });
     mutationObserver.observe(Jira.content(), {
       childList: true,
-      subtree: true,
+      subtree: true
     });
   }
 

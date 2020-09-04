@@ -1,8 +1,6 @@
 class Jira {
   constructor() {
     this._isPresent = null;
-    this._columnsContainer = null;
-    this._columns = null;
   }
 
   isPresent() {
@@ -33,23 +31,15 @@ class Jira {
   }
 
   columnsContainer() {
-    if (this._columnsContainer !== null) {
-      return this._columnsContainer;
-    }
-
-    return (this._columnsContainer = document.querySelector(
+    return document.querySelector(
       '.ghx-swimlane > .ghx-columns, #ghx-mapping, .aui-page-panel-content > #jira-board'
-    ));
+    );
   }
 
   columns() {
-    if (this._columns !== null) {
-      return this._columns;
-    }
-
-    return (this._columns = this.columnsContainer().querySelectorAll(
+    return this.columnsContainer().querySelectorAll(
       '.ghx-column, .ghx-column-wrapper, [class*="hook__column"]'
-    ));
+    );
   }
 
   content() {
