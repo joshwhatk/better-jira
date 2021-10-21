@@ -83,12 +83,11 @@ class Popup {
       this.save();
     });
 
-    document.getElementById('better-jira').addEventListener('submit', (event) => {
-      event.preventDefault();
-      console.log('form submission information', arguments);
-      this.data.columnWidth = document.getElementById('columnWidth').value;
-      this.data.enabled = document.getElementById('enabled').checked;
-      this.save();
+    document.querySelector('#better-jira #columnWidth').addEventListener('change', (changeEvent) => {
+      if (changeEvent.target.value > 10) {
+        this.data.columnWidth = document.getElementById('columnWidth').value;
+        this.save();
+      }
     });
   }
 
