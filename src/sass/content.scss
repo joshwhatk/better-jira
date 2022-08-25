@@ -6,7 +6,7 @@
 body.better-jira {
   /* horizontal scroll on kanban boards */
   #ghx-pool-column {
-    overflow-y: hidden;
+    overflow-y: auto;
   }
   #ghx-pool,
   #jira-board {

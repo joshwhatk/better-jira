@@ -1,1 +1,92 @@
-:root{--viewport-width:2000px;--detail-view-width:32vw}body.better-jira #ghx-pool-column{overflow-y:hidden}body.better-jira #ghx-pool,body.better-jira #jira-board{width:var(--viewport-width)}body.better-jira .ghx-page-panel-content-item{overflow-y:hidden}body.better-jira #ghx-mapping{width:var(--viewport-width)!important}body.better-jira #ghx-detail-view:not(.ui-resizable){width:var(--detail-view-width)!important;position:relative;z-index:3}body.better-jira .aui-sidebar{z-index:2}body.better-jira #ghx-pool-column{display:block;overflow-x:scroll!important}body.better-jira .better-resize{z-index:90;width:7px;position:absolute;top:0;left:-2px;cursor:col-resize;height:100%}body.screenshot #js-work-quickfilters dd,body.screenshot .ghx-group,body.screenshot .ghx-key-group{-webkit-filter:blur(3px);filter:blur(3px)}body.screenshot #ghx-view-selector{-webkit-filter:blur(5px);filter:blur(5px)}body.screenshot #js-detail-nav-content,body.screenshot .ghx-detail-summary,body.screenshot .ghx-wrap-issue section{-webkit-filter:blur(4px);filter:blur(4px)}body.screenshot .ghx-wrap-issue .ghx-grabber{-webkit-filter:blur(3px);filter:blur(3px)}
+:root {
+  --viewport-width: 2000px;
+  --detail-view-width: 32vw;
+}
+
+body.better-jira {
+  /* horizontal scroll on kanban boards */
+  /* horizontal scroll on board settings -> columns option */
+  /* story detail view coulmn */
+  /* Prevent column headers from overlapping when scrolling vertically */
+  /*
+  |--------------------------------------------------------------------------
+  | Firefox
+  |--------------------------------------------------------------------------
+  */
+  /*
+  |--------------------------------------------------------------------------
+  | Resizable Details View
+  |--------------------------------------------------------------------------
+  */
+}
+
+body.better-jira #ghx-pool-column {
+  overflow-y: auto;
+}
+
+body.better-jira #ghx-pool,
+body.better-jira #jira-board {
+  width: var(--viewport-width);
+}
+
+body.better-jira .ghx-page-panel-content-item {
+  overflow-y: hidden;
+}
+
+body.better-jira #ghx-mapping {
+  width: var(--viewport-width) !important;
+}
+
+body.better-jira #ghx-detail-view:not(.ui-resizable) {
+  width: var(--detail-view-width) !important;
+  position: relative;
+  z-index: 3;
+}
+
+body.better-jira .aui-sidebar {
+  z-index: 2;
+}
+
+body.better-jira #ghx-pool-column {
+  display: block;
+  overflow-x: scroll !important;
+}
+
+body.better-jira .better-resize {
+  z-index: 90;
+  width: 7px;
+  position: absolute;
+  top: 0;
+  left: -2px;
+  cursor: col-resize;
+  height: 100%;
+}
+
+body.screenshot #js-work-quickfilters dd,
+body.screenshot .ghx-key-group,
+body.screenshot .ghx-group {
+  -webkit-filter: blur(3px);
+          filter: blur(3px);
+}
+
+body.screenshot #ghx-view-selector {
+  -webkit-filter: blur(5px);
+          filter: blur(5px);
+}
+
+body.screenshot .ghx-detail-summary,
+body.screenshot #js-detail-nav-content {
+  -webkit-filter: blur(4px);
+          filter: blur(4px);
+}
+
+body.screenshot .ghx-wrap-issue section {
+  -webkit-filter: blur(4px);
+          filter: blur(4px);
+}
+
+body.screenshot .ghx-wrap-issue .ghx-grabber {
+  -webkit-filter: blur(3px);
+          filter: blur(3px);
+}
+

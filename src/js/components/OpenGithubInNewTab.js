@@ -13,23 +13,9 @@ export default class OpenGithubInNewTab {
       }
 
       click.preventDefault();
-      if (githubLink.classList.contains('create-pullrequest-link')) {
-        this.enableBetterCreatePullRequestLink(githubLink);
-      }
 
       let newWindow = window.open(githubLink.href, '_blank');
       newWindow.opener = null;
     });
-  }
-
-  enableBetterCreatePullRequestLink(githubLink) {
-    try {
-      let branchName = githubLink.parentElement.parentElement.querySelector(
-        '.branch-link'
-      ).title;
-      githubLink.href = `${githubLink.href}/master...${encodeURI(branchName)}`;
-    } catch (e) {
-      console.warn(e);
-    }
   }
 }
