@@ -1,1 +1,157 @@
-html{background-color:#f5f6f7;overflow:hidden}body{font-family:Raleway,Helvetica,sans-serif;font-size:100%;width:450px;margin:0}header,main{padding:8px}header{background-color:#fff;border-bottom:1px solid #d1d4d7;-webkit-box-shadow:0 0 5px rgba(0,0,0,.1);box-shadow:0 0 5px rgba(0,0,0,.1);position:relative}.close{position:absolute;right:-2px;top:0;font-size:1.7rem;font-family:verdana;-webkit-transform:rotate(45deg);transform:rotate(45deg);cursor:pointer;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;color:#991818}.close:hover{color:#410a0a}h1{margin:0;font-family:Montserrat,Helvetica,sans-serif;display:inline-block;color:#1a5ca2;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;cursor:default}form{height:100%;width:100%}form p{color:gray;font-size:.9rem}form label{-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}form label.checkbox{background-color:#fff;border-radius:4px;padding:8px;border:1px solid #ddd;display:block;cursor:pointer}form label.checkbox input{vertical-align:top}form input[type=submit]{background-color:#1cb330;color:#fff;font-size:16px;font-family:Raleway,Helvetica,sans-serif;border:none;border-radius:4px;padding:0 36px;letter-spacing:.5px;cursor:pointer;outline:none}form input[type=submit]:hover{background-color:#1dbc32}form input[type=submit]:active{background-color:#1cb330}form input[type=number]{font-size:16px;font-family:Montserrat,Helvetica,sans-serif;padding-left:22px;padding-right:0;width:54px;outline:none}form .form-element{padding:6px}form .form-element label{margin-right:8px}.card{background-color:#fff;border-radius:4px;padding:8px;border:1px solid #ddd}.card .row{margin-bottom:0}.row{margin-bottom:.5rem;display:-webkit-box;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:justify;justify-content:space-between}.col-6{margin-right:2rem;-webkit-box-flex:1;-ms-flex:1;flex:1}.col-6:last-child{margin-right:0}
+html {
+  background-color: #f5f6f7;
+  overflow: hidden;
+}
+
+body {
+  font-family: 'Raleway', Helvetica, sans-serif;
+  font-size: 100%;
+  width: 450px;
+  margin: 0;
+}
+
+header,
+main {
+  padding: 8px;
+}
+
+header {
+  background-color: #fff;
+  border-bottom: 1px solid #d1d4d7;
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  right: -2px;
+  top: 0px;
+  font-size: 1.7rem;
+  font-family: verdana;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  color: #991818;
+}
+
+.close:hover {
+  color: #410a0a;
+}
+
+h1 {
+  margin: 0;
+  font-family: 'Montserrat', Helvetica, sans-serif;
+  display: inline-block;
+  color: #1a5ca2;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: default;
+}
+
+form {
+  height: 100%;
+  width: 100%;
+}
+
+form p {
+  color: #808080;
+  font-size: 0.9rem;
+}
+
+form label {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+form label.checkbox {
+  background-color: white;
+  border-radius: 4px;
+  padding: 8px;
+  border: 1px solid #dddddd;
+  display: block;
+  cursor: pointer;
+}
+
+form label.checkbox input {
+  vertical-align: top;
+}
+
+form input[type='submit'] {
+  background-color: #1cb330;
+  color: white;
+  font-size: 16px;
+  font-family: 'Raleway', Helvetica, sans-serif;
+  border: none;
+  border-radius: 4px;
+  padding: 0 36px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  outline: none;
+}
+
+form input[type='submit']:hover {
+  background-color: #1dbc32;
+}
+
+form input[type='submit']:active {
+  background-color: #1cb330;
+}
+
+form input[type='number'] {
+  font-size: 16px;
+  font-family: 'Montserrat', Helvetica, sans-serif;
+  padding-left: 22px;
+  padding-right: 0;
+  width: 54px;
+  outline: none;
+}
+
+form .form-element {
+  padding: 6px;
+}
+
+form .form-element label {
+  margin-right: 8px;
+}
+
+.card {
+  background-color: white;
+  border-radius: 4px;
+  padding: 8px;
+  border: 1px solid #dddddd;
+}
+
+.card .row {
+  margin-bottom: 0;
+}
+
+.row {
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.col-6 {
+  margin-right: 2rem;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.col-6:last-child {
+  margin-right: 0;
+}
+

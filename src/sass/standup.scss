@@ -56,6 +56,8 @@ body.standup {
   */
 
   &.adg3 {
+    --topNavigationHeight: 0px;
+
     #navigation-app {
       display: none;
     }
@@ -66,6 +68,19 @@ body.standup {
 
     #content {
       margin-left: 1rem;
+    }
+
+    // Hide the side navigation (React component)
+    #jira-frontend
+      > div
+      > div
+      > div[class^='css']:nth-of-type(3)
+      > div:first-child {
+      display: none;
+    }
+
+    div#ak-jira-navigation {
+      display: none;
     }
   }
 }
