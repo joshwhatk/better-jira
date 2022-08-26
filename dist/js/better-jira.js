@@ -325,6 +325,7 @@ var BetterJira = function () {
 
       if (!detail.enabled) {
         document.body.classList.remove('better-jira');
+        document.getElementById('ghx-pool').style.width = 'auto';
         return;
       }
       document.body.classList.add('better-jira');
@@ -366,7 +367,6 @@ var BetterJira = function () {
 
         var enabled = function enabled() {
           document.body.classList.add('better-jira');
-
           _this2.Storage.get('columnWidth', _this2._getPreferredWidth.bind(_this2));
           _this2._protectAgainstReactBoardReloading();
         };
@@ -374,6 +374,7 @@ var BetterJira = function () {
         //-- Disallow setting columns if the plugin is not enabled
         var disabled = function disabled() {
           document.body.classList.remove('better-jira');
+          document.getElementById('ghx-pool').style.width = 'auto';
         };
         _this2._ifEnabled(enabled, disabled);
       }, 100);
@@ -418,8 +419,7 @@ var BetterJira = function () {
 
       //-- Handle Smaller Boards
       if (width < window.innerWidth) {
-        var container = document.querySelector('#gh, #content > .aui-page-panel');
-        width = parseInt(container.offsetWidth) - parseInt(window.getComputedStyle(container, null).getPropertyValue('padding-left'));
+        width = 'auto';
       }
 
       try {
@@ -434,7 +434,12 @@ var BetterJira = function () {
   }, {
     key: '_setPoolWidth',
     value: function _setPoolWidth(width) {
-      document.documentElement.style.setProperty('--viewport-width', width + 'px');
+      if (width === 'auto') {
+        document.getElementById('ghx-pool').style.width = 'auto';
+      } else {
+        document.getElementById('ghx-pool').style.width = 'var(--viewport-width)';
+        document.documentElement.style.setProperty('--viewport-width', width + 'px');
+      }
     }
   }, {
     key: '_setDetailViewWidth',
@@ -549,11 +554,13 @@ var Standup = function () {
       document.body.classList.add(this.cssClass);
 
       //-- Add Instructions element
-      var instructionsEl = document.createElement('div');
-      instructionsEl.setAttribute('data-standup-close', '');
-      instructionsEl.classList.add(this.instructionsCssClass);
-      instructionsEl.innerHTML = '\n      <span class="text">Close Standup Mode <span class="close">&nbsp;&plus;&nbsp;</span></span>\n    ';
-      document.body.appendChild(instructionsEl);
+      if (document.querySelectorAll(this.instructionsCssClass).length === 0) {
+        var instructionsEl = document.createElement('div');
+        instructionsEl.setAttribute('data-standup-close', '');
+        instructionsEl.classList.add(this.instructionsCssClass);
+        instructionsEl.innerHTML = '\n        <span class="text">Close Standup Mode <span class="close">&nbsp;&plus;&nbsp;</span></span>\n      ';
+        document.body.appendChild(instructionsEl);
+      }
     }
   }, {
     key: '_cleanupStandup',

@@ -29,6 +29,10 @@ body.better-jira #jira-board {
   width: var(--viewport-width);
 }
 
+body.better-jira #ghx-pool-wrapper {
+  display: grid;
+}
+
 body.better-jira .ghx-page-panel-content-item {
   overflow-y: hidden;
 }

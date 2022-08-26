@@ -13,6 +13,10 @@ body.better-jira {
     width: var(--viewport-width);
   }
 
+  #ghx-pool-wrapper {
+    display:grid;
+  }
+
   /* horizontal scroll on board settings -> columns option */
   .ghx-page-panel-content-item {
     overflow-y: hidden;

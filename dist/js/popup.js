@@ -152,8 +152,7 @@ var Popup = function () {
   }, {
     key: 'handleFormEvents',
     value: function handleFormEvents() {
-      var _this2 = this,
-          _arguments = arguments;
+      var _this2 = this;
 
       //-- Close the window
       var close = document.getElementById('close');
@@ -176,12 +175,12 @@ var Popup = function () {
         _this2.save();
       });
 
-      document.getElementById('better-jira').addEventListener('submit', function (event) {
-        event.preventDefault();
-        console.log('form submission information', _arguments);
-        _this2.data.columnWidth = document.getElementById('columnWidth').value;
-        _this2.data.enabled = document.getElementById('enabled').checked;
-        _this2.save();
+      //-- Auto update DOM
+      document.querySelector('#better-jira #columnWidth').addEventListener('change', function (changeEvent) {
+        if (changeEvent.target.value > 10) {
+          _this2.data.columnWidth = document.getElementById('columnWidth').value;
+          _this2.save();
+        }
       });
     }
   }, {
