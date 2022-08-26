@@ -45,13 +45,13 @@ class Standup {
     document.body.classList.add(this.cssClass);
 
     //-- Add Instructions element
-    let instructionsEl = document.createElement('div');
-    instructionsEl.setAttribute('data-standup-close', '');
-    instructionsEl.classList.add(this.instructionsCssClass);
-    instructionsEl.innerHTML = `
-      <span class="text">Close Standup Mode <span class="close">&nbsp;&plus;&nbsp;</span></span>
-    `;
-    document.body.appendChild(instructionsEl);
+    if (document.querySelectorAll(this.instructionsCssClass).length === 0) {
+      var instructionsEl = document.createElement('div');
+      instructionsEl.setAttribute('data-standup-close', '');
+      instructionsEl.classList.add(this.instructionsCssClass);
+      instructionsEl.innerHTML = '\n        <span class="text">Close Standup Mode <span class="close">&nbsp;&plus;&nbsp;</span></span>\n      ';
+      document.body.appendChild(instructionsEl);
+    }
   }
 
   _cleanupStandup() {
