@@ -36,6 +36,7 @@ export default class BetterJira {
 
     if (!detail.enabled) {
       document.body.classList.remove('better-jira');
+      document.getElementById('ghx-pool').style.width = 'auto';
       return;
     }
     document.body.classList.add('better-jira');
@@ -71,7 +72,6 @@ export default class BetterJira {
 
       let enabled = () => {
         document.body.classList.add('better-jira');
-
         this.Storage.get('columnWidth', this._getPreferredWidth.bind(this));
         this._protectAgainstReactBoardReloading();
       };
@@ -79,6 +79,7 @@ export default class BetterJira {
       //-- Disallow setting columns if the plugin is not enabled
       let disabled = () => {
         document.body.classList.remove('better-jira');
+        document.getElementById('ghx-pool').style.width = 'auto';
       };
       this._ifEnabled(enabled, disabled);
     }, 100);
@@ -118,14 +119,7 @@ export default class BetterJira {
 
     //-- Handle Smaller Boards
     if (width < window.innerWidth) {
-      let container = document.querySelector('#gh, #content > .aui-page-panel');
-      width =
-        parseInt(container.offsetWidth) -
-        parseInt(
-          window
-            .getComputedStyle(container, null)
-            .getPropertyValue('padding-left')
-        );
+      width = 'auto';
     }
 
     try {
@@ -139,10 +133,15 @@ export default class BetterJira {
   }
 
   _setPoolWidth(width) {
-    document.documentElement.style.setProperty(
-      '--viewport-width',
-      `${width}px`
-    );
+    if (width === 'auto') {
+      document.getElementById('ghx-pool').style.width = 'auto';
+    } else {
+      document.getElementById('ghx-pool').style.width = 'var(--viewport-width)';
+      document.documentElement.style.setProperty(
+        '--viewport-width',
+        `${width}px`
+      );
+    }
   }
 
   _setDetailViewWidth(width) {
