@@ -46,12 +46,17 @@ class Standup {
 
     //-- Add Instructions element
     if (document.querySelectorAll(this.instructionsCssClass).length === 0) {
+      console.log('made another button here');
       var instructionsEl = document.createElement('div');
       instructionsEl.setAttribute('data-standup-close', '');
       instructionsEl.classList.add(this.instructionsCssClass);
       instructionsEl.innerHTML = '\n        <span class="text">Close Standup Mode <span class="close">&nbsp;&plus;&nbsp;</span></span>\n      ';
       document.body.appendChild(instructionsEl);
     }
+
+    //-- Hide breadcrumbs
+    document.querySelector('[data-testid="rapidboard-breadcrumbs"]').style.display = 'none';
+
   }
 
   _cleanupStandup() {
@@ -66,6 +71,10 @@ class Standup {
     if (instructions !== null) {
       instructions.remove();
     }
+
+    //-- Show breadcrumbs
+    document.querySelector('[data-testid="rapidboard-breadcrumbs"]').style.display = 'block';
+
   }
 }
 export default new Standup();
