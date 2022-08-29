@@ -554,8 +554,7 @@ var Standup = function () {
       document.body.classList.add(this.cssClass);
 
       //-- Add Instructions element
-      if (document.querySelectorAll(this.instructionsCssClass).length === 0) {
-        console.log('made another button here');
+      if (document.querySelectorAll('.' + this.instructionsCssClass).length === 0) {
         var instructionsEl = document.createElement('div');
         instructionsEl.setAttribute('data-standup-close', '');
         instructionsEl.classList.add(this.instructionsCssClass);
