@@ -554,13 +554,16 @@ var Standup = function () {
       document.body.classList.add(this.cssClass);
 
       //-- Add Instructions element
-      if (document.querySelectorAll(this.instructionsCssClass).length === 0) {
+      if (document.querySelectorAll('.' + this.instructionsCssClass).length === 0) {
         var instructionsEl = document.createElement('div');
         instructionsEl.setAttribute('data-standup-close', '');
         instructionsEl.classList.add(this.instructionsCssClass);
         instructionsEl.innerHTML = '\n        <span class="text">Close Standup Mode <span class="close">&nbsp;&plus;&nbsp;</span></span>\n      ';
         document.body.appendChild(instructionsEl);
       }
+
+      //-- Hide breadcrumbs
+      document.querySelector('[data-testid="rapidboard-breadcrumbs"]').style.display = 'none';
     }
   }, {
     key: '_cleanupStandup',
@@ -576,6 +579,9 @@ var Standup = function () {
       if (instructions !== null) {
         instructions.remove();
       }
+
+      //-- Show breadcrumbs
+      document.querySelector('[data-testid="rapidboard-breadcrumbs"]').style.display = 'block';
     }
   }]);
 
