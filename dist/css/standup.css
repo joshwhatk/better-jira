@@ -1,3 +1,18 @@
+body.better-jira #ghx-column-headers .ghx-column {
+  padding: 5px 17px !important;
+}
+
+body.better-jira #ghx-column-headers .ghx-column h2,
+body.better-jira #ghx-column-headers .ghx-column .ghx-qty,
+body.better-jira #ghx-column-headers .ghx-column .ghx-limits {
+  font-size: 1em !important;
+  font-weight: 700 !important;
+}
+
+body.better-jira #gh #ghx-work #ghx-pool-column.ghx-flexible-board .ghx-swimlane .ghx-swimlane-header {
+  top: 30px !important;
+}
+
 body.standup {
   /*
   |--------------------------------------------------------------------------

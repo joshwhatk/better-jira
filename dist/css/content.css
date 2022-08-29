@@ -8,16 +8,6 @@ body.better-jira {
   /* horizontal scroll on board settings -> columns option */
   /* story detail view coulmn */
   /* Prevent column headers from overlapping when scrolling vertically */
-  /*
-  |--------------------------------------------------------------------------
-  | Firefox
-  |--------------------------------------------------------------------------
-  */
-  /*
-  |--------------------------------------------------------------------------
-  | Resizable Details View
-  |--------------------------------------------------------------------------
-  */
 }
 
 body.better-jira #ghx-pool-column {
@@ -52,7 +42,7 @@ body.better-jira .aui-sidebar {
 }
 
 body.better-jira #ghx-pool-column {
-  display: block;
+  display: block !important;
   overflow-x: scroll !important;
 }
 
