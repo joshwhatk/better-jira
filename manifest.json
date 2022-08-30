@@ -1,5 +1,5 @@
 {
-  "browser_action": {
+  "action": {
     "default_icon": "icon_16.png",
     "default_popup": "popup.html"
   },
@@ -16,9 +16,9 @@
     "128": "icon_128.png"
   },
   "description": "Much needed interface improvements for Jira",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "Better Jira",
-  "permissions": ["https://*.atlassian.net/*", "storage"],
+  "permissions": ["storage"],
   "update_url": "https://clients2.google.com/service/update2/crx",
   "version": "1.5.3"
 }

@@ -11,6 +11,7 @@ export default class BetterJira {
     this.data = {};
     this.Storage = chrome.storage.sync;
     this.running = true;
+    this.instructionsCssClass = 'BetterJira-instructions';
 
     if (Jira.isNotPresent()) {
       this.running = false;

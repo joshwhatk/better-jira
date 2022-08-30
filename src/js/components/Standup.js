@@ -14,6 +14,48 @@ class Standup {
       return;
     }
 
+    // Open standup listener
+    this._listener = (click) => {
+      let standupButton = click.target.closest('[data-standup-open]');
+      if (!standupButton) {
+        return;
+      }
+
+      chrome.storage.sync.set({ standup: true }, () => {
+        this.initializeStandup(true);
+      });
+    };
+    document.addEventListener('click', this._listener);
+
+    //-- Add open Standup Mode button element
+    var openStandupModeBtn = document.createElement('div');
+    openStandupModeBtn.setAttribute('data-standup-open', '');
+    openStandupModeBtn.classList.add(this.instructionsCssClass);
+    openStandupModeBtn.innerHTML = '<span class="text">Standup Mode <span class="open">&nbsp;&laquo;&nbsp;</span></span>';
+    openStandupModeBtn.style.display = 'none';
+    document.getElementById('ghx-operations').appendChild(openStandupModeBtn);
+
+    // Close standup listener
+    this._listener = (click) => {
+      let closeButton = click.target.closest('[data-standup-close]');
+      if (!closeButton) {
+        return;
+      }
+
+      chrome.storage.sync.set({ standup: false }, () => {
+        this._cleanupStandup();
+      });
+    };
+    document.addEventListener('click', this._listener);
+
+    //-- Add close Standup Mode button element
+    var closeStandupModeBtn = document.createElement('div');
+    closeStandupModeBtn.setAttribute('data-standup-close', '');
+    closeStandupModeBtn.classList.add(this.instructionsCssClass);
+    closeStandupModeBtn.innerHTML = '<span class="text">Standup Mode <span class="close">&nbsp;&laquo;&nbsp;</span></span>';
+    closeStandupModeBtn.style.display = 'none';
+    document.getElementById('ghx-operations').appendChild(closeStandupModeBtn);
+
     if (!state) {
       this._cleanupStandup();
       return;
@@ -27,31 +69,16 @@ class Standup {
       return;
     }
 
-    this._listener = (click) => {
-      let closeButton = click.target.closest('[data-standup-close]');
-      if (!closeButton) {
-        return;
-      }
-
-      chrome.storage.sync.set({ standup: false }, () => {
-        this._cleanupStandup();
-      });
-    };
-    document.addEventListener('click', this._listener);
-
     window.standup = true;
 
     //-- Add `standup` class to the body
     document.body.classList.add(this.cssClass);
 
-    //-- Add Instructions element
-    if (document.querySelectorAll('.' + this.instructionsCssClass).length === 0) {
-      var instructionsEl = document.createElement('div');
-      instructionsEl.setAttribute('data-standup-close', '');
-      instructionsEl.classList.add(this.instructionsCssClass);
-      instructionsEl.innerHTML = '\n        <span class="text">Close Standup Mode <span class="close">&nbsp;&plus;&nbsp;</span></span>\n      ';
-      document.body.appendChild(instructionsEl);
-    }
+    //-- Show close standup mode button
+    document.querySelector('[data-standup-close]').style.display = 'block';
+
+    //-- Hide open standup mode button
+    document.querySelector('[data-standup-open]').style.display = 'none';
 
     //-- Hide breadcrumbs
     document.querySelector('[data-testid="rapidboard-breadcrumbs"]').style.display = 'none';
@@ -59,17 +86,18 @@ class Standup {
   }
 
   _cleanupStandup() {
+
+    //-- Remove standup class
     document.body.classList.remove(this.cssClass);
+
+    //-- Turn off standup mode
     window.standup = false;
 
-    //-- Clear the event listener
-    document.removeEventListener('click', this._listener);
+    //-- Hide close standup mode button
+    document.querySelector('[data-standup-close]').style.display = 'none';
 
-    //-- remove Instructions element
-    let instructions = document.querySelector(`.${this.instructionsCssClass}`);
-    if (instructions !== null) {
-      instructions.remove();
-    }
+    //-- Show open standup mode button
+    document.querySelector('[data-standup-open]').style.display = 'block';
 
     //-- Show breadcrumbs
     document.querySelector('[data-testid="rapidboard-breadcrumbs"]').style.display = 'block';
