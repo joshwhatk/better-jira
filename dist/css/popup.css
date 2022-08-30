@@ -63,6 +63,7 @@ form {
 form p {
   color: #808080;
   font-size: 0.9rem;
+  margin: 0 0 0.5rem 0;
 }
 
 form label {
@@ -73,12 +74,9 @@ form label {
 }
 
 form label.checkbox {
-  background-color: white;
-  border-radius: 4px;
-  padding: 8px;
-  border: 1px solid #dddddd;
   display: block;
   cursor: pointer;
+  font-size:0.9rem;
 }
 
 form label.checkbox input {
@@ -130,6 +128,18 @@ form .form-element label {
   border: 1px solid #dddddd;
 }
 
+.card.hover:hover {
+  background-color:rgba(222,235,255,0.9);
+  border-color:#0052CC;
+  cursor:pointer;
+}
+
+.card.selected {
+  background-color:#0052CC;
+  border-color:#0052CC;
+  color:white;
+}
+
 .card .row {
   margin-bottom: 0;
 }
@@ -142,6 +152,10 @@ form .form-element label {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
+}
+
+.row:last-child {
+  margin-bottom:0;
 }
 
 .col-3, .col-6 {
