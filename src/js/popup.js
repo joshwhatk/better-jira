@@ -1,6 +1,7 @@
+console.log('here');
+
 class Popup {
   constructor() {
-    console.log('here')
     this.Storage = chrome.storage.sync;
     this.data = {};
     this.defaults = {
@@ -32,9 +33,40 @@ class Popup {
       }
       this.data.columnWidth = value;
 
-      // FIX THIS
-      console.log('here')
-      document.getElementById('columnWidth').value = this.data.columnWidth;
+      //-- Define sizes
+      const columnWidths = {
+        sm: {
+          min: 'auto',
+          max: 'auto'
+        },
+        md: {
+          min: this.data.columnWidth,
+          max: this.data.columnWidth + 500
+        },
+        lg: {
+          min: this.data.columnWidth + 501,
+          max: this.data.columnWidth + 1000
+        },
+        xl: {
+          min: this.data.columnWidth + 1001,
+          max: this.data.columnWidth + 1500
+        }
+      }
+
+      //-- Set size selection
+      document.querySelectorAll('[data-column-width-selector]').forEach(columnWidthSelector => {
+        columnWidthSelector.classList.remove('selected');
+      });
+      if (this.data.columnWidth === 'sm') {
+        document.querySelector('[data-column-width-sm]').classList.add('selected');
+      } else if (this.data.columnWidth === 'md') {
+        document.querySelector('[data-column-width-md]').classList.add('selected');
+      } else if (this.data.columnWidth === 'lg') {
+        document.querySelector('[data-column-width-lg]').classList.add('selected');
+      } else if (this.data.columnWidth === 'xl') {
+        document.querySelector('[data-column-width-xl]').classList.add('selected');
+      }
+
     });
 
     this.Storage.get('enabled', (storage) => {
@@ -59,42 +91,30 @@ class Popup {
 
       this.data.standup = value;
       console.log('standup storage', storage);
-
-      document.getElementById('standup').checked = !! value;
     });
   }
 
   handleFormEvents() {
+    //-- Trigger Update Column Width (as a 1-click event)
+    document.querySelectorAll('[data-column-width-selector]').forEach(columnWidthSelector => {
+      columnWidthSelector.addEventListener('click', (event) => {
+        this.data.columnWidth = event.target.dataset.columnWidth;
+        this.save();
+      });
+    });
 
     //-- Trigger Enabled (as a 1-click event)
     let enabled = document.getElementById('enabled');
-    console.log('here')
     enabled.addEventListener('click', (event) => {
       this.data.enabled = enabled.checked;
       this.save();
-    });
-
-    //-- Trigger Standup (as a 1-click event)
-    let standup = document.getElementById('standup');
-    standup.addEventListener('click', (event) => {
-      console.log('you clicked it!', standup.checked, event);
-      this.data.standup = standup.checked;
-      this.save();
-    });
-
-    //-- Auto update DOM
-    // FIX THIS
-    document.querySelector('#better-jira #columnWidth').addEventListener('change', (changeEvent) => {
-      if (changeEvent.target.value > 10) {
-        this.data.columnWidth = document.getElementById('columnWidth').value;
-        this.save();
-      }
     });
   }
 
   save() {
     this.Storage.set({enabled: this.data.enabled}, () => {
       this.Storage.set({columnWidth: this.data.columnWidth}, () => {
+        this.setDefaults();
         this.Storage.set({standup: this.data.standup}, this.refresh.bind(this));
       });
     });
@@ -108,7 +128,7 @@ class Popup {
 
         `let updateEvent = new CustomEvent('${this.defaults.updatedEvent}', {`,
           `detail: {`,
-            `columnWidth: ${this.data.columnWidth},`,
+            `columnWidth: '${this.data.columnWidth}',`,
             `enabled: ${this.data.enabled},`,
             `standup: ${this.data.standup},`,
           `}`,
@@ -123,5 +143,4 @@ class Popup {
   }
 }
 
-console.log('here is a popup')
 new Popup;

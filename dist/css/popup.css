@@ -132,7 +132,7 @@ form .form-element label {
   margin-bottom: 0;
 }
 
-.card.hover:hover {
+.card.hover:hover:not(.selected) {
   background-color: rgba(222, 235, 255, 0.9);
   border-color: #0052CC;
   cursor: pointer;

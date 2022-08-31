@@ -80,11 +80,12 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
+console.log('here');
+
 var Popup = function () {
   function Popup() {
     _classCallCheck(this, Popup);
 
-    console.log('here');
     this.Storage = chrome.storage.sync;
     this.data = {};
     this.defaults = {
@@ -121,9 +122,38 @@ var Popup = function () {
         }
         _this.data.columnWidth = value;
 
-        // FIX THIS
-        console.log('here');
-        document.getElementById('columnWidth').value = _this.data.columnWidth;
+        //-- Define sizes
+        var columnWidths = {
+          sm: {
+            min: 'auto',
+            max: 'auto'
+          },
+          md: {
+            min: _this.data.columnWidth,
+            max: _this.data.columnWidth + 500
+          },
+          lg: {
+            min: _this.data.columnWidth + 501,
+            max: _this.data.columnWidth + 1000
+          },
+          xl: {
+            min: _this.data.columnWidth + 1001,
+            max: _this.data.columnWidth + 1500
+          }
+
+          //-- Set size selection
+        };document.querySelectorAll('[data-column-width-selector]').forEach(function (columnWidthSelector) {
+          columnWidthSelector.classList.remove('selected');
+        });
+        if (_this.data.columnWidth === 'sm') {
+          document.querySelector('[data-column-width-sm]').classList.add('selected');
+        } else if (_this.data.columnWidth === 'md') {
+          document.querySelector('[data-column-width-md]').classList.add('selected');
+        } else if (_this.data.columnWidth === 'lg') {
+          document.querySelector('[data-column-width-lg]').classList.add('selected');
+        } else if (_this.data.columnWidth === 'xl') {
+          document.querySelector('[data-column-width-xl]').classList.add('selected');
+        }
       });
 
       this.Storage.get('enabled', function (storage) {
@@ -148,8 +178,6 @@ var Popup = function () {
 
         _this.data.standup = value;
         console.log('standup storage', storage);
-
-        document.getElementById('standup').checked = !!value;
       });
     }
   }, {
@@ -157,29 +185,19 @@ var Popup = function () {
     value: function handleFormEvents() {
       var _this2 = this;
 
+      //-- Trigger Update Column Width (as a 1-click event)
+      document.querySelectorAll('[data-column-width-selector]').forEach(function (columnWidthSelector) {
+        columnWidthSelector.addEventListener('click', function (event) {
+          _this2.data.columnWidth = event.target.dataset.columnWidth;
+          _this2.save();
+        });
+      });
+
       //-- Trigger Enabled (as a 1-click event)
       var enabled = document.getElementById('enabled');
-      console.log('here');
       enabled.addEventListener('click', function (event) {
         _this2.data.enabled = enabled.checked;
         _this2.save();
-      });
-
-      //-- Trigger Standup (as a 1-click event)
-      var standup = document.getElementById('standup');
-      standup.addEventListener('click', function (event) {
-        console.log('you clicked it!', standup.checked, event);
-        _this2.data.standup = standup.checked;
-        _this2.save();
-      });
-
-      //-- Auto update DOM
-      // FIX THIS
-      document.querySelector('#better-jira #columnWidth').addEventListener('change', function (changeEvent) {
-        if (changeEvent.target.value > 10) {
-          _this2.data.columnWidth = document.getElementById('columnWidth').value;
-          _this2.save();
-        }
       });
     }
   }, {
@@ -189,6 +207,7 @@ var Popup = function () {
 
       this.Storage.set({ enabled: this.data.enabled }, function () {
         _this3.Storage.set({ columnWidth: _this3.data.columnWidth }, function () {
+          _this3.setDefaults();
           _this3.Storage.set({ standup: _this3.data.standup }, _this3.refresh.bind(_this3));
         });
       });
@@ -196,7 +215,7 @@ var Popup = function () {
   }, {
     key: 'refresh',
     value: function refresh() {
-      var code = ['(function()', '{', '\'use strict\';', 'let updateEvent = new CustomEvent(\'' + this.defaults.updatedEvent + '\', {', 'detail: {', 'columnWidth: ' + this.data.columnWidth + ',', 'enabled: ' + this.data.enabled + ',', 'standup: ' + this.data.standup + ',', '}', '});', 'document.dispatchEvent(updateEvent);', '})();'];
+      var code = ['(function()', '{', '\'use strict\';', 'let updateEvent = new CustomEvent(\'' + this.defaults.updatedEvent + '\', {', 'detail: {', 'columnWidth: \'' + this.data.columnWidth + '\',', 'enabled: ' + this.data.enabled + ',', 'standup: ' + this.data.standup + ',', '}', '});', 'document.dispatchEvent(updateEvent);', '})();'];
 
       chrome.tabs.executeScript({
         code: code.join('')
@@ -207,7 +226,6 @@ var Popup = function () {
   return Popup;
 }();
 
-console.log('here is a popup');
 new Popup();
 
 /***/ })

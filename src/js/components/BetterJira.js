@@ -93,8 +93,8 @@ export default class BetterJira {
 
     this.data.columnWidth = storage.columnWidth;
 
-    if (isNaN(this.data.columnWidth)) {
-      this.data.columnWidth = 200;
+    if (!this.data.columnWidth) {
+      this.data.columnWidth = 'sm';
     }
 
     this._setPreferredWidth();
@@ -109,18 +109,25 @@ export default class BetterJira {
 
     preferredWidth = this.data.columnWidth;
 
-    columnCount = Jira.columns().length;
+    //-- Fix for new named string widths
+    width = preferredWidth;
 
-    padding = columnCount * 12;
-    width = columnCount * preferredWidth + padding;
+    if (typeof preferredWidth !== 'string') {
 
-    if (width < 10) {
-      return;
-    }
+      columnCount = Jira.columns().length;
 
-    //-- Handle Smaller Boards
-    if (width < window.innerWidth) {
-      width = 'auto';
+      padding = columnCount * 12;
+      width = columnCount * preferredWidth + padding;
+
+      if (width < 10) {
+        return;
+      }
+
+      //-- Handle Smaller Boards
+      if (width < window.innerWidth) {
+        width = 'auto';
+      }
+
     }
 
     try {

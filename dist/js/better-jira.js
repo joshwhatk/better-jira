@@ -389,8 +389,8 @@ var BetterJira = function () {
 
       this.data.columnWidth = storage.columnWidth;
 
-      if (isNaN(this.data.columnWidth)) {
-        this.data.columnWidth = 200;
+      if (!this.data.columnWidth) {
+        this.data.columnWidth = 'sm';
       }
 
       this._setPreferredWidth();
@@ -409,18 +409,24 @@ var BetterJira = function () {
 
       preferredWidth = this.data.columnWidth;
 
-      columnCount = __WEBPACK_IMPORTED_MODULE_1__Jira__["a" /* default */].columns().length;
+      //-- Fix for new named string widths
+      width = preferredWidth;
 
-      padding = columnCount * 12;
-      width = columnCount * preferredWidth + padding;
+      if (typeof preferredWidth !== 'string') {
 
-      if (width < 10) {
-        return;
-      }
+        columnCount = __WEBPACK_IMPORTED_MODULE_1__Jira__["a" /* default */].columns().length;
 
-      //-- Handle Smaller Boards
-      if (width < window.innerWidth) {
-        width = 'auto';
+        padding = columnCount * 12;
+        width = columnCount * preferredWidth + padding;
+
+        if (width < 10) {
+          return;
+        }
+
+        //-- Handle Smaller Boards
+        if (width < window.innerWidth) {
+          width = 'auto';
+        }
       }
 
       try {
