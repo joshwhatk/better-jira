@@ -84,6 +84,7 @@ var Popup = function () {
   function Popup() {
     _classCallCheck(this, Popup);
 
+    console.log('here');
     this.Storage = chrome.storage.sync;
     this.data = {};
     this.defaults = {
@@ -120,6 +121,8 @@ var Popup = function () {
         }
         _this.data.columnWidth = value;
 
+        // FIX THIS
+        console.log('here');
         document.getElementById('columnWidth').value = _this.data.columnWidth;
       });
 
@@ -154,14 +157,9 @@ var Popup = function () {
     value: function handleFormEvents() {
       var _this2 = this;
 
-      //-- Close the window
-      var close = document.getElementById('close');
-      close.addEventListener('click', function (event) {
-        window.close();
-      });
-
       //-- Trigger Enabled (as a 1-click event)
       var enabled = document.getElementById('enabled');
+      console.log('here');
       enabled.addEventListener('click', function (event) {
         _this2.data.enabled = enabled.checked;
         _this2.save();
@@ -176,6 +174,7 @@ var Popup = function () {
       });
 
       //-- Auto update DOM
+      // FIX THIS
       document.querySelector('#better-jira #columnWidth').addEventListener('change', function (changeEvent) {
         if (changeEvent.target.value > 10) {
           _this2.data.columnWidth = document.getElementById('columnWidth').value;
@@ -208,6 +207,7 @@ var Popup = function () {
   return Popup;
 }();
 
+console.log('here is a popup');
 new Popup();
 
 /***/ })

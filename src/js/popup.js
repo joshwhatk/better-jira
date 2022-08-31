@@ -1,5 +1,6 @@
 class Popup {
   constructor() {
+    console.log('here')
     this.Storage = chrome.storage.sync;
     this.data = {};
     this.defaults = {
@@ -31,6 +32,8 @@ class Popup {
       }
       this.data.columnWidth = value;
 
+      // FIX THIS
+      console.log('here')
       document.getElementById('columnWidth').value = this.data.columnWidth;
     });
 
@@ -62,14 +65,10 @@ class Popup {
   }
 
   handleFormEvents() {
-    //-- Close the window
-    let close = document.getElementById('close');
-    close.addEventListener('click', (event) => {
-      window.close();
-    });
 
     //-- Trigger Enabled (as a 1-click event)
     let enabled = document.getElementById('enabled');
+    console.log('here')
     enabled.addEventListener('click', (event) => {
       this.data.enabled = enabled.checked;
       this.save();
@@ -84,6 +83,7 @@ class Popup {
     });
 
     //-- Auto update DOM
+    // FIX THIS
     document.querySelector('#better-jira #columnWidth').addEventListener('change', (changeEvent) => {
       if (changeEvent.target.value > 10) {
         this.data.columnWidth = document.getElementById('columnWidth').value;
@@ -123,4 +123,5 @@ class Popup {
   }
 }
 
+console.log('here is a popup')
 new Popup;
