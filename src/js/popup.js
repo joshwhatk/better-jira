@@ -33,26 +33,6 @@ class Popup {
       }
       this.data.columnWidth = value;
 
-      //-- Define sizes
-      const columnWidths = {
-        sm: {
-          min: 'auto',
-          max: 'auto'
-        },
-        md: {
-          min: this.data.columnWidth,
-          max: this.data.columnWidth + 500
-        },
-        lg: {
-          min: this.data.columnWidth + 501,
-          max: this.data.columnWidth + 1000
-        },
-        xl: {
-          min: this.data.columnWidth + 1001,
-          max: this.data.columnWidth + 1500
-        }
-      }
-
       //-- Set size selection
       document.querySelectorAll('[data-column-width-selector]').forEach(columnWidthSelector => {
         columnWidthSelector.classList.remove('selected');

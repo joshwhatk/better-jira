@@ -122,27 +122,8 @@ var Popup = function () {
         }
         _this.data.columnWidth = value;
 
-        //-- Define sizes
-        var columnWidths = {
-          sm: {
-            min: 'auto',
-            max: 'auto'
-          },
-          md: {
-            min: _this.data.columnWidth,
-            max: _this.data.columnWidth + 500
-          },
-          lg: {
-            min: _this.data.columnWidth + 501,
-            max: _this.data.columnWidth + 1000
-          },
-          xl: {
-            min: _this.data.columnWidth + 1001,
-            max: _this.data.columnWidth + 1500
-          }
-
-          //-- Set size selection
-        };document.querySelectorAll('[data-column-width-selector]').forEach(function (columnWidthSelector) {
+        //-- Set size selection
+        document.querySelectorAll('[data-column-width-selector]').forEach(function (columnWidthSelector) {
           columnWidthSelector.classList.remove('selected');
         });
         if (_this.data.columnWidth === 'sm') {

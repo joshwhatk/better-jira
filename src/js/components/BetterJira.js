@@ -141,13 +141,25 @@ export default class BetterJira {
   }
 
   _setPoolWidth(width) {
-    if (width === 'auto') {
+
+    //-- Define sizes
+    const columnWidths = {
+      sm: 'auto',
+      md: window.innerWidth + 500,
+      lg: window.innerWidth + 1000,
+      xl: window.innerWidth + 1500
+    }
+
+    console.log('width', width)
+    console.log('columnWidths[width]', columnWidths[width])
+
+    if (width === 'sm') {
       document.getElementById('ghx-pool').style.width = 'auto';
     } else {
       document.getElementById('ghx-pool').style.width = 'var(--viewport-width)';
       document.documentElement.style.setProperty(
         '--viewport-width',
-        `${width}px`
+        `${columnWidths[width]}px`
       );
     }
   }
