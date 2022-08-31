@@ -1,0 +1,17 @@
+@mixin open-button($open-color: #0052CC, $top: 0px) {
+  .open {
+    position: absolute;
+    right: -2px;
+    top: $top;
+    font-size: 1.7rem;
+    font-family: verdana;
+    transform: rotate(90deg);
+    cursor: pointer;
+    user-select: none;
+    color: $open-color;
+
+    &:hover {
+      color: darken($open-color, 20%);
+    }
+  }
+}

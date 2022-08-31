@@ -76,7 +76,7 @@ form label {
 form label.checkbox {
   display: block;
   cursor: pointer;
-  font-size:0.9rem;
+  font-size: 0.9rem;
 }
 
 form label.checkbox input {
@@ -128,20 +128,20 @@ form .form-element label {
   border: 1px solid #dddddd;
 }
 
+.card .row {
+  margin-bottom: 0;
+}
+
 .card.hover:hover {
-  background-color:rgba(222,235,255,0.9);
-  border-color:#0052CC;
-  cursor:pointer;
+  background-color: rgba(222, 235, 255, 0.9);
+  border-color: #0052CC;
+  cursor: pointer;
 }
 
 .card.selected {
-  background-color:#0052CC;
-  border-color:#0052CC;
-  color:white;
-}
-
-.card .row {
-  margin-bottom: 0;
+  background-color: #0052CC;
+  border-color: #0052CC;
+  color: white;
 }
 
 .row {
@@ -155,17 +155,19 @@ form .form-element label {
 }
 
 .row:last-child {
-  margin-bottom:0;
+  margin-bottom: 0;
 }
 
-.col-3, .col-6 {
+.col-3,
+.col-6 {
   margin-right: 0.5rem;
   -webkit-box-flex: 1;
       -ms-flex: 1;
           flex: 1;
 }
 
-.col-3:last-child, .col-6:last-child {
+.col-3:last-child,
+.col-6:last-child {
   margin-right: 0;
 }
 
@@ -174,5 +176,6 @@ form .form-element label {
 }
 
 .padding-20 {
-  padding:20px;
+  padding: 20px;
 }
+

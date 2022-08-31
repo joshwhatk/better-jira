@@ -51,6 +51,7 @@ form {
   p {
     color: #808080;
     font-size: 0.9rem;
+    margin: 0 0 0.5rem 0;
   }
 
   label {
@@ -58,12 +59,9 @@ form {
   }
 
   label.checkbox {
-    background-color: white;
-    border-radius: 4px;
-    padding: 8px;
-    border: 1px solid #dddddd;
     display: block;
     cursor: pointer;
+    font-size:0.9rem;
 
     input {
       vertical-align: top;
@@ -120,16 +118,41 @@ form {
   }
 }
 
+.card.hover:hover {
+  background-color:rgba(222,235,255,0.9);
+  border-color:#0052CC;
+  cursor:pointer;
+}
+
+.card.selected {
+  background-color:#0052CC;
+  border-color:#0052CC;
+  color:white;
+}
+
 .row {
   margin-bottom: 0.5rem;
   display: flex;
   justify-content: space-between;
 }
-.col-6 {
-  margin-right: 2rem;
+
+.row:last-child {
+  margin-bottom:0;
+}
+
+.col-3, .col-6 {
+  margin-right: 0.5rem;
   flex: 1;
 
   &:last-child {
     margin-right: 0;
   }
+}
+
+.text-center {
+  text-align: center;
+}
+
+.padding-20 {
+  padding:20px;
 }
