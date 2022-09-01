@@ -98,7 +98,10 @@ body.better-jira #ghx-pool-column {
   overflow-y: auto;
 }
 
-body.better-jira #ghx-pool,
+body.better-jira #ghx-pool {
+  width: auto;
+}
+
 body.better-jira #jira-board {
   width: var(--viewport-width);
 }
@@ -167,4 +170,3 @@ body.screenshot .ghx-wrap-issue .ghx-grabber {
   -webkit-filter: blur(3px);
           filter: blur(3px);
 }
-

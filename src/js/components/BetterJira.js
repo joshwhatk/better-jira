@@ -105,36 +105,15 @@ export default class BetterJira {
       return;
     }
 
-    let preferredWidth, columnCount, padding, width;
+    let preferredWidth;
 
     preferredWidth = this.data.columnWidth;
 
-    //-- Fix for new named string widths
-    width = preferredWidth;
-
-    if (typeof preferredWidth !== 'string') {
-
-      columnCount = Jira.columns().length;
-
-      padding = columnCount * 12;
-      width = columnCount * preferredWidth + padding;
-
-      if (width < 10) {
-        return;
-      }
-
-      //-- Handle Smaller Boards
-      if (width < window.innerWidth) {
-        width = 'auto';
-      }
-
-    }
-
     try {
-      let items = { poolWidth: width };
+      let items = { poolWidth: preferredWidth };
       this.Storage.set(items);
 
-      this._setPoolWidth(width);
+      this._setPoolWidth(preferredWidth);
     } catch (e) {
       console.error(e);
     }
@@ -150,13 +129,10 @@ export default class BetterJira {
       xl: '250%'
     }
 
-    console.log('width', width)
-    console.log('columnWidths[width]', columnWidths[width])
-
     if (width === 'sm') {
-      document.getElementById('ghx-pool').style.width = 'auto';
+      document.getElementById('ghx-pool-wrapper').style.width = 'auto';
     } else {
-      document.getElementById('ghx-pool').style.width = 'var(--viewport-width)';
+      document.getElementById('ghx-pool-wrapper').style.width = 'var(--viewport-width)';
       document.documentElement.style.setProperty(
         '--viewport-width',
         `${columnWidths[width]}`

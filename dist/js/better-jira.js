@@ -402,38 +402,15 @@ var BetterJira = function () {
         return;
       }
 
-      var preferredWidth = void 0,
-          columnCount = void 0,
-          padding = void 0,
-          width = void 0;
+      var preferredWidth = void 0;
 
       preferredWidth = this.data.columnWidth;
 
-      //-- Fix for new named string widths
-      width = preferredWidth;
-
-      if (typeof preferredWidth !== 'string') {
-
-        columnCount = __WEBPACK_IMPORTED_MODULE_1__Jira__["a" /* default */].columns().length;
-
-        padding = columnCount * 12;
-        width = columnCount * preferredWidth + padding;
-
-        if (width < 10) {
-          return;
-        }
-
-        //-- Handle Smaller Boards
-        if (width < window.innerWidth) {
-          width = 'auto';
-        }
-      }
-
       try {
-        var items = { poolWidth: width };
+        var items = { poolWidth: preferredWidth };
         this.Storage.set(items);
 
-        this._setPoolWidth(width);
+        this._setPoolWidth(preferredWidth);
       } catch (e) {
         console.error(e);
       }
@@ -450,13 +427,10 @@ var BetterJira = function () {
         xl: '250%'
       };
 
-      console.log('width', width);
-      console.log('columnWidths[width]', columnWidths[width]);
-
       if (width === 'sm') {
-        document.getElementById('ghx-pool').style.width = 'auto';
+        document.getElementById('ghx-pool-wrapper').style.width = 'auto';
       } else {
-        document.getElementById('ghx-pool').style.width = 'var(--viewport-width)';
+        document.getElementById('ghx-pool-wrapper').style.width = 'var(--viewport-width)';
         document.documentElement.style.setProperty('--viewport-width', '' + columnWidths[width]);
       }
     }

@@ -1,5 +1,3 @@
-console.log('here');
-
 class Popup {
   constructor() {
     this.Storage = chrome.storage.sync;
