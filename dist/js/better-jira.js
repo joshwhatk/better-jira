@@ -445,9 +445,9 @@ var BetterJira = function () {
       //-- Define sizes
       var columnWidths = {
         sm: 'auto',
-        md: window.innerWidth + 500,
-        lg: window.innerWidth + 1000,
-        xl: window.innerWidth + 1500
+        md: '150%',
+        lg: '200%',
+        xl: '250%'
       };
 
       console.log('width', width);
@@ -457,7 +457,7 @@ var BetterJira = function () {
         document.getElementById('ghx-pool').style.width = 'auto';
       } else {
         document.getElementById('ghx-pool').style.width = 'var(--viewport-width)';
-        document.documentElement.style.setProperty('--viewport-width', columnWidths[width] + 'px');
+        document.documentElement.style.setProperty('--viewport-width', '' + columnWidths[width]);
       }
     }
   }, {

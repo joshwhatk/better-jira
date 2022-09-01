@@ -145,9 +145,9 @@ export default class BetterJira {
     //-- Define sizes
     const columnWidths = {
       sm: 'auto',
-      md: window.innerWidth + 500,
-      lg: window.innerWidth + 1000,
-      xl: window.innerWidth + 1500
+      md: '150%',
+      lg: '200%',
+      xl: '250%'
     }
 
     console.log('width', width)
@@ -159,7 +159,7 @@ export default class BetterJira {
       document.getElementById('ghx-pool').style.width = 'var(--viewport-width)';
       document.documentElement.style.setProperty(
         '--viewport-width',
-        `${columnWidths[width]}px`
+        `${columnWidths[width]}`
       );
     }
   }
