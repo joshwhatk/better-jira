@@ -51,11 +51,16 @@ body.better-jira {
   #gh #ghx-work #ghx-pool-column.ghx-flexible-board .ghx-swimlane .ghx-swimlane-header {
     top:30px !important;
   }
+  
   /* horizontal scroll on kanban boards */
   #ghx-pool-column {
     overflow-y: auto;
   }
-  #ghx-pool,
+
+  #ghx-pool {
+    width: auto;
+  }
+
   #jira-board {
     width: var(--viewport-width);
   }

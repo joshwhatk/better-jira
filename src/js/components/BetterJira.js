@@ -37,7 +37,7 @@ export default class BetterJira {
 
     if (!detail.enabled) {
       document.body.classList.remove('better-jira');
-      document.getElementById('ghx-pool').style.width = 'auto';
+      document.getElementById('ghx-pool-wrapper').style.width = 'auto';
       return;
     }
     document.body.classList.add('better-jira');
@@ -80,7 +80,7 @@ export default class BetterJira {
       //-- Disallow setting columns if the plugin is not enabled
       let disabled = () => {
         document.body.classList.remove('better-jira');
-        document.getElementById('ghx-pool').style.width = 'auto';
+        document.getElementById('ghx-pool-wrapper').style.width = 'auto';
       };
       this._ifEnabled(enabled, disabled);
     }, 100);

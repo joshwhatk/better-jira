@@ -326,7 +326,7 @@ var BetterJira = function () {
 
       if (!detail.enabled) {
         document.body.classList.remove('better-jira');
-        document.getElementById('ghx-pool').style.width = 'auto';
+        document.getElementById('ghx-pool-wrapper').style.width = 'auto';
         return;
       }
       document.body.classList.add('better-jira');
@@ -375,7 +375,7 @@ var BetterJira = function () {
         //-- Disallow setting columns if the plugin is not enabled
         var disabled = function disabled() {
           document.body.classList.remove('better-jira');
-          document.getElementById('ghx-pool').style.width = 'auto';
+          document.getElementById('ghx-pool-wrapper').style.width = 'auto';
         };
         _this2._ifEnabled(enabled, disabled);
       }, 100);
