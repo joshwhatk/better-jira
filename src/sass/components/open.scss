@@ -1,17 +1,17 @@
-@mixin close-button($close-color: #d04437, $top: 0px) {
-  .close {
+@mixin open-button($open-color: #0052CC, $top: 0px) {
+  .open {
     position: absolute;
     right: -2px;
     top: $top;
     font-size: 1.7rem;
     font-family: verdana;
-    transform: rotate(-90deg);
+    transform: rotate(90deg);
     cursor: pointer;
     user-select: none;
-    color: $close-color;
+    color: $open-color;
 
     &:hover {
-      color: darken($close-color, 20%);
+      color: darken($open-color, 20%);
     }
   }
 }

@@ -1,1 +1,173 @@
-:root{--viewport-width:2000px;--detail-view-width:32vw}body.better-jira #ghx-column-headers .ghx-column{padding:5px 17px!important}body.better-jira #ghx-column-headers .ghx-column .ghx-limits,body.better-jira #ghx-column-headers .ghx-column .ghx-qty,body.better-jira #ghx-column-headers .ghx-column h2{font-size:1em!important;font-weight:700!important}body.better-jira #gh #ghx-work #ghx-pool-column.ghx-flexible-board .ghx-swimlane .ghx-swimlane-header{top:30px!important}body.better-jira #ghx-pool-column{overflow-y:auto}body.better-jira #ghx-pool,body.better-jira #jira-board{width:var(--viewport-width)}body.better-jira #ghx-pool-wrapper{display:grid}body.better-jira .ghx-page-panel-content-item{overflow-y:hidden}body.better-jira #ghx-mapping{width:var(--viewport-width)!important}body.better-jira #ghx-detail-view:not(.ui-resizable){width:var(--detail-view-width)!important;position:relative;z-index:3}body.better-jira .aui-sidebar{z-index:2}body.better-jira #ghx-pool-column{display:block!important;overflow-x:scroll!important}body.better-jira .better-resize{z-index:90;width:7px;position:absolute;top:0;left:-2px;cursor:col-resize;height:100%}body.screenshot #js-work-quickfilters dd,body.screenshot .ghx-group,body.screenshot .ghx-key-group{-webkit-filter:blur(3px);filter:blur(3px)}body.screenshot #ghx-view-selector{-webkit-filter:blur(5px);filter:blur(5px)}body.screenshot #js-detail-nav-content,body.screenshot .ghx-detail-summary,body.screenshot .ghx-wrap-issue section{-webkit-filter:blur(4px);filter:blur(4px)}body.screenshot .ghx-wrap-issue .ghx-grabber{-webkit-filter:blur(3px);filter:blur(3px)}
+:root {
+  --viewport-width: 2000px;
+  --detail-view-width: 32vw;
+}
+
+.BetterJira-instructions {
+  position: relative;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  background: rgba(9, 30, 66, 0.04) none repeat scroll 0% 0%;
+  -webkit-transition: background 0.1s ease-out 0s, -webkit-box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
+  transition: background 0.1s ease-out 0s, -webkit-box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
+  transition: background 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
+  transition: background 0.1s ease-out 0s, box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s, -webkit-box-shadow 0.15s cubic-bezier(0.47, 0.03, 0.49, 1.38) 0s;
+  color: var(--ds-text, #42526E) !important;
+  font-weight: 500;
+  padding: 0px 10px;
+  height: 2.28571em;
+  line-height: 2.28571em;
+  cursor: pointer;
+}
+
+.BetterJira-instructions .text {
+  margin-right: 1.4rem;
+}
+
+.BetterJira-instructions:hover {
+  background: rgba(9, 30, 66, 0.08);
+  color: #42526e !important;
+  -webkit-transition-duration: 0s, 0.15s;
+          transition-duration: 0s, 0.15s;
+}
+
+.BetterJira-instructions .close {
+  position: absolute;
+  right: -2px;
+  top: 0px;
+  font-size: 1.7rem;
+  font-family: verdana;
+  -webkit-transform: rotate(-90deg);
+          transform: rotate(-90deg);
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  color: #d04437;
+}
+
+.BetterJira-instructions .close:hover {
+  color: #82271f;
+}
+
+.BetterJira-instructions .open {
+  position: absolute;
+  right: -2px;
+  top: 0px;
+  font-size: 1.7rem;
+  font-family: verdana;
+  -webkit-transform: rotate(90deg);
+          transform: rotate(90deg);
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  color: #0052CC;
+}
+
+.BetterJira-instructions .open:hover {
+  color: #002966;
+}
+
+body.better-jira {
+  /* horizontal scroll on kanban boards */
+  /* horizontal scroll on board settings -> columns option */
+  /* story detail view coulmn */
+  /* Prevent column headers from overlapping when scrolling vertically */
+}
+
+body.better-jira #ghx-column-headers .ghx-column {
+  padding: 5px 17px !important;
+}
+
+body.better-jira #ghx-column-headers .ghx-column h2,
+body.better-jira #ghx-column-headers .ghx-column .ghx-qty,
+body.better-jira #ghx-column-headers .ghx-column .ghx-limits {
+  font-size: 1em !important;
+  font-weight: 700 !important;
+}
+
+body.better-jira #gh #ghx-work #ghx-pool-column.ghx-flexible-board .ghx-swimlane .ghx-swimlane-header {
+  top: 30px !important;
+}
+
+body.better-jira #ghx-pool-column {
+  overflow-y: auto;
+}
+
+body.better-jira #ghx-pool {
+  width: auto;
+}
+
+body.better-jira #jira-board {
+  width: var(--viewport-width);
+}
+
+body.better-jira #ghx-pool-wrapper {
+  display: grid;
+}
+
+body.better-jira .ghx-page-panel-content-item {
+  overflow-y: hidden;
+}
+
+body.better-jira #ghx-mapping {
+  width: var(--viewport-width) !important;
+}
+
+body.better-jira #ghx-detail-view:not(.ui-resizable) {
+  width: var(--detail-view-width) !important;
+  position: relative;
+  z-index: 3;
+}
+
+body.better-jira .aui-sidebar {
+  z-index: 2;
+}
+
+body.better-jira #ghx-pool-column {
+  display: block !important;
+  overflow-x: scroll !important;
+}
+
+body.better-jira .better-resize {
+  z-index: 90;
+  width: 7px;
+  position: absolute;
+  top: 0;
+  left: -2px;
+  cursor: col-resize;
+  height: 100%;
+}
+
+body.screenshot #js-work-quickfilters dd,
+body.screenshot .ghx-key-group,
+body.screenshot .ghx-group {
+  -webkit-filter: blur(3px);
+          filter: blur(3px);
+}
+
+body.screenshot #ghx-view-selector {
+  -webkit-filter: blur(5px);
+          filter: blur(5px);
+}
+
+body.screenshot .ghx-detail-summary,
+body.screenshot #js-detail-nav-content {
+  -webkit-filter: blur(4px);
+          filter: blur(4px);
+}
+
+body.screenshot .ghx-wrap-issue section {
+  -webkit-filter: blur(4px);
+          filter: blur(4px);
+}
+
+body.screenshot .ghx-wrap-issue .ghx-grabber {
+  -webkit-filter: blur(3px);
+          filter: blur(3px);
+}
+

@@ -10,27 +10,27 @@
   <body>
     <header>
       <h1>Better JIRA</h1>
-      <span id="close" class="close">&nbsp;&plus;&nbsp;</span>
     </header>
     <main>
       <form id="better-jira">
+        <p>Set your default Kanban Column Width.</p>      
         <div class="row">
-          <div class="col-6">
-            <p>Turn the changes on/off.</p>
-            <label class="checkbox"><input type="checkbox" id="enabled" name="enabled"> Enabled</label>
+          <div class="col-3">
+            <div data-column-width-selector data-column-width-sm data-column-width="sm" class="card hover padding-20 text-center">SM</div>
           </div>
-          <div class="col-6">
-            <p>Toggle Standup Mode.</p>
-            <label class="checkbox"><input type="checkbox" id="standup" name="standup"> Standup Mode</label>
+          <div class="col-3">
+            <div data-column-width-selector data-column-width-md data-column-width="md" class="card hover padding-20 text-center">MD</div>
+          </div>
+          <div class="col-3">
+            <div data-column-width-selector data-column-width-lg data-column-width="lg" class="card hover padding-20 text-center">LG</div>
+          </div>
+          <div class="col-3">
+            <div data-column-width-selector data-column-width-xl data-column-width="xl" class="card hover padding-20 text-center">XL</div>
           </div>
         </div>
-        <p>Set your default Kanban Column Width.</p>
-        <div class="card">
-          <div class="row">
-            <div class="form-element">
-              <label for="columnWidth">Column width</label>
-              <input type="number" id="columnWidth" name="columnWidth" step="10">
-            </div>
+        <div class="row">
+          <div class="col-12">
+            <label class="checkbox"><input type="checkbox" id="enabled" name="enabled"> Enabled</label>
           </div>
         </div>
       </form>

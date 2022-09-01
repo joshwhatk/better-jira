@@ -31,7 +31,20 @@ class Popup {
       }
       this.data.columnWidth = value;
 
-      document.getElementById('columnWidth').value = this.data.columnWidth;
+      //-- Set size selection
+      document.querySelectorAll('[data-column-width-selector]').forEach(columnWidthSelector => {
+        columnWidthSelector.classList.remove('selected');
+      });
+      if (this.data.columnWidth === 'sm') {
+        document.querySelector('[data-column-width-sm]').classList.add('selected');
+      } else if (this.data.columnWidth === 'md') {
+        document.querySelector('[data-column-width-md]').classList.add('selected');
+      } else if (this.data.columnWidth === 'lg') {
+        document.querySelector('[data-column-width-lg]').classList.add('selected');
+      } else if (this.data.columnWidth === 'xl') {
+        document.querySelector('[data-column-width-xl]').classList.add('selected');
+      }
+
     });
 
     this.Storage.get('enabled', (storage) => {
@@ -56,16 +69,16 @@ class Popup {
 
       this.data.standup = value;
       console.log('standup storage', storage);
-
-      document.getElementById('standup').checked = !! value;
     });
   }
 
   handleFormEvents() {
-    //-- Close the window
-    let close = document.getElementById('close');
-    close.addEventListener('click', (event) => {
-      window.close();
+    //-- Trigger Update Column Width (as a 1-click event)
+    document.querySelectorAll('[data-column-width-selector]').forEach(columnWidthSelector => {
+      columnWidthSelector.addEventListener('click', (event) => {
+        this.data.columnWidth = event.target.dataset.columnWidth;
+        this.save();
+      });
     });
 
     //-- Trigger Enabled (as a 1-click event)
@@ -74,27 +87,12 @@ class Popup {
       this.data.enabled = enabled.checked;
       this.save();
     });
-
-    //-- Trigger Standup (as a 1-click event)
-    let standup = document.getElementById('standup');
-    standup.addEventListener('click', (event) => {
-      console.log('you clicked it!', standup.checked, event);
-      this.data.standup = standup.checked;
-      this.save();
-    });
-
-    //-- Auto update DOM
-    document.querySelector('#better-jira #columnWidth').addEventListener('change', (changeEvent) => {
-      if (changeEvent.target.value > 10) {
-        this.data.columnWidth = document.getElementById('columnWidth').value;
-        this.save();
-      }
-    });
   }
 
   save() {
     this.Storage.set({enabled: this.data.enabled}, () => {
       this.Storage.set({columnWidth: this.data.columnWidth}, () => {
+        this.setDefaults();
         this.Storage.set({standup: this.data.standup}, this.refresh.bind(this));
       });
     });
@@ -108,7 +106,7 @@ class Popup {
 
         `let updateEvent = new CustomEvent('${this.defaults.updatedEvent}', {`,
           `detail: {`,
-            `columnWidth: ${this.data.columnWidth},`,
+            `columnWidth: '${this.data.columnWidth}',`,
             `enabled: ${this.data.enabled},`,
             `standup: ${this.data.standup},`,
           `}`,

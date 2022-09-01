@@ -11,6 +11,7 @@ export default class BetterJira {
     this.data = {};
     this.Storage = chrome.storage.sync;
     this.running = true;
+    this.instructionsCssClass = 'BetterJira-instructions';
 
     if (Jira.isNotPresent()) {
       this.running = false;
@@ -36,7 +37,7 @@ export default class BetterJira {
 
     if (!detail.enabled) {
       document.body.classList.remove('better-jira');
-      document.getElementById('ghx-pool').style.width = 'auto';
+      document.getElementById('ghx-pool-wrapper').style.width = 'auto';
       return;
     }
     document.body.classList.add('better-jira');
@@ -79,7 +80,7 @@ export default class BetterJira {
       //-- Disallow setting columns if the plugin is not enabled
       let disabled = () => {
         document.body.classList.remove('better-jira');
-        document.getElementById('ghx-pool').style.width = 'auto';
+        document.getElementById('ghx-pool-wrapper').style.width = 'auto';
       };
       this._ifEnabled(enabled, disabled);
     }, 100);
@@ -92,8 +93,8 @@ export default class BetterJira {
 
     this.data.columnWidth = storage.columnWidth;
 
-    if (isNaN(this.data.columnWidth)) {
-      this.data.columnWidth = 200;
+    if (!this.data.columnWidth) {
+      this.data.columnWidth = 'sm';
     }
 
     this._setPreferredWidth();
@@ -104,42 +105,37 @@ export default class BetterJira {
       return;
     }
 
-    let preferredWidth, columnCount, padding, width;
+    let preferredWidth;
 
     preferredWidth = this.data.columnWidth;
 
-    columnCount = Jira.columns().length;
-
-    padding = columnCount * 12;
-    width = columnCount * preferredWidth + padding;
-
-    if (width < 10) {
-      return;
-    }
-
-    //-- Handle Smaller Boards
-    if (width < window.innerWidth) {
-      width = 'auto';
-    }
-
     try {
-      let items = { poolWidth: width };
+      let items = { poolWidth: preferredWidth };
       this.Storage.set(items);
 
-      this._setPoolWidth(width);
+      this._setPoolWidth(preferredWidth);
     } catch (e) {
       console.error(e);
     }
   }
 
   _setPoolWidth(width) {
-    if (width === 'auto') {
-      document.getElementById('ghx-pool').style.width = 'auto';
+
+    //-- Define sizes
+    const columnWidths = {
+      sm: 'auto',
+      md: '150%',
+      lg: '200%',
+      xl: '250%'
+    }
+
+    if (width === 'sm') {
+      document.getElementById('ghx-pool-wrapper').style.width = 'auto';
     } else {
-      document.getElementById('ghx-pool').style.width = 'var(--viewport-width)';
+      document.getElementById('ghx-pool-wrapper').style.width = 'var(--viewport-width)';
       document.documentElement.style.setProperty(
         '--viewport-width',
-        `${width}px`
+        `${columnWidths[width]}`
       );
     }
   }
